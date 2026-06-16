@@ -116,6 +116,11 @@ h2.section-title{ font-family:'Rajdhani',sans-serif; font-size:14px; letter-spac
 h2.section-title::before{ content:''; width:6px; height:6px; background:var(--glow); display:inline-block; }
 
 @media(max-width:360px){ .stats-grid{ grid-template-columns:1fr; } }
+
+.sign-btn{ background:var(--glow); border:none; color:var(--bg); font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); }
+.sign-out-btn{ background:none; border:1px solid var(--text-dim); color:var(--text-dim); font-weight:600; padding:6px 10px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:11px; }
+.sign-out-btn:hover{ color:var(--danger); border-color:var(--danger); }
+.support-btn{ background:var(--gold); border:none; color:var(--bg); font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); }
 </style>
 </head>
 <body>
@@ -129,6 +134,13 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 </div>
 
 <div class="wrap hidden" id="app">
+
+  <div style="text-align:right; margin-bottom:12px; display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap;">
+    <button class="support-btn" id="supportBtn">☕ Support</button>
+    <button class="sign-btn" id="signInBtn" style="display:none;">Sign in with Google</button>
+    <button class="sign-out-btn" id="signOutBtn" style="display:none;">Sign out</button>
+    <span id="userEmail" style="font-size:11px; color:var(--text-dim);"></span>
+  </div>
 
   <div class="frame pulse">
     <div class="frame-inner">
@@ -185,7 +197,7 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 <script type="module">
 // ============ FIREBASE INITIALIZATION ============
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // YOUR FIREBASE CONFIG - REPLACE WITH YOUR CONFIG
@@ -200,6 +212,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 const db = getFirestore(app);
 
 let currentUser = null;
@@ -474,6 +487,41 @@ function escapeHtml(s){
   return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
+// ============ GOOGLE SIGN IN/OUT ============
+async function signInWithGoogle(){
+  try{
+    const result = await signInWithPopup(auth, googleProvider);
+    currentUser = result.user;
+    setupFirebaseListener(currentUser.uid);
+    document.getElementById('userEmail').textContent = currentUser.email;
+    document.getElementById('signInBtn').style.display = 'none';
+    document.getElementById('signOutBtn').style.display = 'inline';
+    queueNotify('SYNC', 'Signed in! Your data syncs across all devices.', 'normal');
+  } catch(err){
+    console.error('Sign in error:', err);
+    queueNotify('ERROR', 'Sign in failed. Try again.', 'normal');
+  }
+}
+
+async function signOutUser(){
+  try{
+    await signOut(auth);
+    currentUser = null;
+    if(unsubscribeSnapshot) unsubscribeSnapshot();
+    document.getElementById('userEmail').textContent = '';
+    document.getElementById('signInBtn').style.display = 'inline';
+    document.getElementById('signOutBtn').style.display = 'none';
+    queueNotify('SYSTEM', 'Signed out.', 'normal');
+  } catch(err){
+    console.error('Sign out error:', err);
+  }
+}
+
+function openSupport(){
+  const upiLink = 'upi://pay?pa=arora13rudeus@fam&pn=Ascend%20Level%20Up&tn=Support%20Ascend&am=';
+  window.location.href = upiLink;
+}
+
 document.addEventListener('click', (e)=>{
   if(e.target.matches('.q-check')) toggleQuest(e.target.dataset.id);
   if(e.target.matches('.q-del')) deleteQuest(e.target.dataset.id);
@@ -484,16 +532,26 @@ document.addEventListener('click', (e)=>{
 
 // ============ INITIALIZATION ============
 (async function init(){
-  // Sign in anonymously and wait for auth state
+  // Sign in with Google
+  document.getElementById('signInBtn').addEventListener('click', signInWithGoogle);
+  document.getElementById('signOutBtn').addEventListener('click', signOutUser);
+  document.getElementById('supportBtn').addEventListener('click', openSupport);
+  
   onAuthStateChanged(auth, async (user) => {
     if(user){
       currentUser = user;
+      document.getElementById('userEmail').textContent = user.email;
+      document.getElementById('signInBtn').style.display = 'none';
+      document.getElementById('signOutBtn').style.display = 'inline';
       const loaded = await loadState();
       state = loaded || defaultState();
       if(state.bonusGiven===undefined) state.bonusGiven=false;
       applyDailyReset();
       setupFirebaseListener(user.uid);
     } else {
+      currentUser = null;
+      document.getElementById('signInBtn').style.display = 'inline';
+      document.getElementById('signOutBtn').style.display = 'none';
       const loaded = await loadState();
       state = loaded || defaultState();
       if(state.bonusGiven===undefined) state.bonusGiven=false;
@@ -511,14 +569,6 @@ document.addEventListener('click', (e)=>{
     document.getElementById('app').classList.remove('hidden');
     saveState(state);
   });
-  
-  // Try to sign in anonymously
-  try{
-    await signInAnonymously(auth);
-  } catch(err){
-    console.error('Auth error:', err);
-    // Falls back to localStorage if anonymous sign-in fails
-  }
 })();
 
 </script>
