@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ascend Level Up - Gamified Fitness Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+            color: #d6ecff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: rgba(12, 20, 36, 0.9);
+            border: 2px solid #2dd4ff;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 0 30px rgba(45, 212, 255, 0.3);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #2dd4ff;
+            text-shadow: 0 0 10px rgba(45, 212, 255, 0.5);
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: #5b7088;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #d6ecff;
+            margin-bottom: 30px;
+            background: rgba(45, 212, 255, 0.05);
+            padding: 20px;
+            border-left: 3px solid #2dd4ff;
+            border-radius: 8px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .feature {
+            background: rgba(45, 212, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(45, 212, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .feature-text {
+            font-size: 13px;
+            color: #d6ecff;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 16px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .btn-primary {
+            background: #2dd4ff;
+            color: #060912;
+            box-shadow: 0 0 20px rgba(45, 212, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #7ee8ff;
+            box-shadow: 0 0 30px rgba(45, 212, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #2dd4ff;
+            border: 2px solid #2dd4ff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(45, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .instructions {
+            background: rgba(45, 212, 255, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #5b7088;
+            border: 1px solid rgba(45, 212, 255, 0.2);
+        }
+
+        .instructions h3 {
+            color: #2dd4ff;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .instructions p {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #5b7088;
+            border-top: 1px solid rgba(45, 212, 255, 0.2);
+            padding-top: 15px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="icon">⚔️</div>
+            <h1>Ascend Level Up</h1>
+            <p class="tagline">Transform Your Fitness Into an Epic Quest</p>
+        </div>
+
+        <div class="description">
+            <strong>Level up your workouts!</strong> Track daily quests, earn XP, unlock ranks, and watch your stats grow. Like an RPG, but for your fitness journey. 💪
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">Daily Quests</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <div class="feature-text">Track Stats</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🏆</div>
+                <div class="feature-text">Earn Ranks</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">☁️</div>
+                <div class="feature-text">Cloud Sync</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">Mobile App</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚙️</div>
+                <div class="feature-text">Offline Mode</div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="openApp()">🚀 Open App Now</button>
+            <button class="btn btn-secondary" onclick="installApp()">📲 Add to Home Screen</button>
+        </div>
+
+        <div class="instructions">
+            <h3>📖 How to Install</h3>
+            <p><strong>On iPhone:</strong> Tap Share → Add to Home Screen</p>
+            <p><strong>On Android:</strong> Tap ⋮ (menu) → Install app</p>
+            <p><strong>Or:</strong> Just click "Open App Now" to start!</p>
+        </div>
+
+        <div class="footer">
+            ✨ Built with ❤️ | <a href="https://ascend-level-up.vercel.app/" style="color: #2dd4ff; text-decoration: none;">ascend-level-up.vercel.app</a>
+        </div>
+    </div>
+
+    <script>
+        function openApp() {
+            window.location.href = 'https://ascend-level-up.vercel.app/';
+        }
+
+        function installApp() {
+            // For PWA install prompt
+            if (window.deferredPrompt) {
+                window.deferredPrompt.prompt();
+            } else {
+                // Fallback: show instructions
+                alert('📲 How to install:\n\niPhone: Open in Safari → Share → Add to Home Screen\n\nAndroid: Tap ⋮ (menu) → Install app\n\nOr just click "Open App Now"!');
+            }
+        }
+
+        // Handle PWA install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            window.deferredPrompt = e;
+        });
+    </script>
+</body>
+</html>
