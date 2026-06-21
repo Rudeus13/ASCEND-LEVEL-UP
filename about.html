@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us & Contact - Ascend Level Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+            color: #d6ecff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            border-bottom: 2px solid #2dd4ff;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #2dd4ff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(45, 212, 255, 0.5);
+        }
+
+        .breadcrumb {
+            font-size: 14px;
+            color: #5b7088;
+        }
+
+        .section {
+            background: rgba(12, 20, 36, 0.8);
+            border: 1px solid rgba(45, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(45, 212, 255, 0.1);
+        }
+
+        .section h2 {
+            font-size: 28px;
+            color: #2dd4ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #d6ecff;
+            margin-bottom: 15px;
+        }
+
+        .section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section li {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #d6ecff;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            background: rgba(45, 212, 255, 0.1);
+            padding: 20px;
+            border-left: 3px solid #2dd4ff;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .contact-icon {
+            font-size: 24px;
+            min-width: 30px;
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-text strong {
+            color: #2dd4ff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .contact-text a {
+            color: #7ee8ff;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .contact-text a:hover {
+            text-decoration: underline;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2dd4ff;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: rgba(45, 212, 255, 0.05);
+            border: 1px solid rgba(45, 212, 255, 0.3);
+            border-radius: 6px;
+            color: #d6ecff;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2dd4ff;
+            background: rgba(45, 212, 255, 0.1);
+        }
+
+        .submit-btn {
+            background: #2dd4ff;
+            color: #060912;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #7ee8ff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(45, 212, 255, 0.4);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: rgba(45, 212, 255, 0.1);
+            border: 1px solid rgba(45, 212, 255, 0.3);
+            color: #2dd4ff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(45, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(45, 212, 255, 0.2);
+            font-size: 12px;
+            color: #5b7088;
+        }
+
+        @media (max-width: 600px) {
+            .section {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .section h2 {
+                font-size: 22px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ Ascend Level Up</h1>
+            <p class="breadcrumb"><a href="https://ascend-level-up.vercel.app/" style="color: #7ee8ff; text-decoration: none;">← Back to App</a></p>
+        </header>
+
+        <!-- ABOUT US SECTION -->
+        <div class="section">
+            <h2>📖 About Us</h2>
+            
+            <p><strong>Welcome to Ascend Level Up!</strong></p>
+            
+            <p>Ascend Level Up is a gamified fitness tracking application designed to transform your workout journey into an epic RPG adventure. We believe that fitness should be fun, engaging, and rewarding — just like leveling up in your favorite video game.</p>
+
+            <h3 style="color: #7ee8ff; margin-top: 20px; margin-bottom: 10px;">Our Mission</h3>
+            <p>To empower users to achieve their fitness goals by combining the excitement of role-playing games with real-world health and wellness tracking.</p>
+
+            <h3 style="color: #7ee8ff; margin-top: 20px; margin-bottom: 10px;">What We Offer</h3>
+            <ul>
+                <li><strong>Daily Quests:</strong> Set and complete daily fitness challenges to earn XP</li>
+                <li><strong>Level System:</strong> Progress through ranks (E, D, C, B, A, S) as you complete quests</li>
+                <li><strong>Stat Tracking:</strong> Monitor your Strength, Dexterity, Intelligence, Vitality, Wisdom, and Luck</li>
+                <li><strong>Cloud Sync:</strong> Access your progress across all your devices seamlessly</li>
+                <li><strong>Offline Mode:</strong> Track your workouts even without internet connection</li>
+                <li><strong>PWA Technology:</strong> Install directly on your phone like a native app</li>
+            </ul>
+
+            <h3 style="color: #7ee8ff; margin-top: 20px; margin-bottom: 10px;">Our Technology</h3>
+            <p>Ascend Level Up is built with modern web technologies including Firebase for cloud synchronization, Google Analytics for performance tracking, and Progressive Web App (PWA) technology for seamless mobile experience.</p>
+
+            <h3 style="color: #7ee8ff; margin-top: 20px; margin-bottom: 10px;">Developer</h3>
+            <p><strong>Lakshya Arora</strong> — First-year BBA student and indie developer from Dehradun, India. Built Ascend Level Up as a personal project to combine passion for fitness, gaming, and web development.</p>
+
+            <h3 style="color: #7ee8ff; margin-top: 20px; margin-bottom: 10px;">Privacy & Data</h3>
+            <p>Your data is stored securely in our Firebase database and is only accessible to your account. We respect your privacy and do not share personal information with third parties. Your fitness progress is yours alone.</p>
+        </div>
+
+        <!-- CONTACT US SECTION -->
+        <div class="section">
+            <h2>📧 Contact Us</h2>
+
+            <p>Have questions, suggestions, or encountered an issue? We'd love to hear from you!</p>
+
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-text">
+                        <strong>Email</strong>
+                        <a href="mailto:lakshyaarora556@gmail.com">lakshyaarora556@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">
+                        <strong>Location</strong>
+                        Dehradun, India
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">💻</div>
+                    <div class="contact-text">
+                        <strong>App</strong>
+                        <a href="https://ascend-level-up.vercel.app/">https://ascend-level-up.vercel.app/</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">🔗</div>
+                    <div class="contact-text">
+                        <strong>GitHub</strong>
+                        <a href="https://github.com/Rudeus13/ascend-level-up">github.com/Rudeus13/ascend-level-up</a>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="color: #7ee8ff; margin-top: 30px; margin-bottom: 15px;">Send us a Message</h3>
+            <p style="margin-bottom: 20px; font-size: 14px; color: #5b7088;">Fill out the form below and we'll get back to you as soon as possible!</p>
+
+            <form action="https://formspree.io/f/xzzbpwlv" method="POST">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+
+            <p style="margin-top: 15px; font-size: 12px; color: #5b7088;">We typically respond within 24-48 hours.</p>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="https://ascend-level-up.vercel.app/" class="back-link">← Back to App</a>
+        </div>
+
+        <footer>
+            <p>© 2026 Ascend Level Up. All rights reserved. | <a href="https://ascend-level-up.vercel.app/" style="color: #7ee8ff; text-decoration: none;">ascend-level-up.vercel.app</a></p>
+        </footer>
+    </div>
+</body>
+</html>
