@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard — Ascend Level Up</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Share Tech Mono', monospace;
+  background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+  color: #d6ecff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container { max-width: 600px; margin: 0 auto; }
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 2px solid #2dd4ff;
+}
+
+h1 {
+  font-size: 32px;
+  color: #2dd4ff;
+  text-shadow: 0 0 10px rgba(45, 212, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: rgba(45, 212, 255, 0.1);
+  border: 1px solid rgba(45, 212, 255, 0.3);
+  color: #2dd4ff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: rgba(45, 212, 255, 0.2);
+}
+
+.leaderboard-frame {
+  background: rgba(12, 20, 36, 0.9);
+  border: 2px solid #2dd4ff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(45, 212, 255, 0.2);
+  min-height: 400px;
+}
+
+.leaderboard-frame h2 {
+  color: #fbbf24;
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.leaderboard-list {
+  list-style: none;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: rgba(45, 212, 255, 0.05);
+  border-left: 3px solid #2dd4ff;
+  border-radius: 4px;
+  gap: 12px;
+}
+
+.rank {
+  font-weight: 700;
+  font-size: 18px;
+  color: #fbbf24;
+  min-width: 30px;
+  text-align: center;
+}
+
+.rank.top1 { color: #fbbf24; font-size: 20px; }
+.rank.top2 { color: #7ee8ff; font-size: 19px; }
+.rank.top3 { color: #fca5a5; font-size: 19px; }
+
+.player-info {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-name {
+  color: #d6ecff;
+  font-weight: 600;
+}
+
+.player-stats {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+  color: #5b7088;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  color: #2dd4ff;
+  font-size: 10px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #5b7088;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+  color: #2dd4ff;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(45, 212, 255, 0.2);
+  font-size: 11px;
+  color: #5b7088;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 24px; }
+  .player-stats { gap: 12px; }
+  .leaderboard-item { padding: 10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🏆 LEADERBOARD</h1>
+    <a href="/" class="back-link">← Back to App</a>
+  </header>
+
+  <div class="leaderboard-frame">
+    <h2>Top 10 Hunters</h2>
+    <div id="leaderboardContainer" class="loading">Loading leaderboard...</div>
+  </div>
+
+  <footer>
+    <p>Leaderboard updates every time a player levels up.<br>
+    Top players are ranked by their highest level.</p>
+  </footer>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+// Firebase config loaded from index.html's existing config
+// This uses the same Firebase project as your main app
+const firebaseConfig = {
+  apiKey: "AIzaSyDjpLq6w0sJBd67MdyDT2LIoSL64q3kqXA",
+  authDomain: "ascend-levelup.firebaseapp.com",
+  projectId: "ascend-levelup",
+  storageBucket: "ascend-levelup.appspot.com",
+  messagingSenderId: "779627849838",
+  appId: "1:779627849838:web:ba3c7c78a2f07a7dd68159"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function loadLeaderboard() {
+  try {
+    const container = document.getElementById('leaderboardContainer');
+    
+    // Query top 10 players by level (descending)
+    const q = query(
+      collection(db, 'users'),
+      orderBy('state.level', 'desc'),
+      limit(10)
+    );
+    
+    const snapshot = await getDocs(q);
+    
+    if (snapshot.empty) {
+      container.innerHTML = '<div class="empty-state">No players yet. Be the first to climb the ranks!</div>';
+      return;
+    }
+    
+    const html = '<ul class="leaderboard-list">';
+    let rank = 1;
+    let listHTML = html;
+    
+    snapshot.docs.forEach((doc) => {
+      const data = doc.data();
+      const state = data.state || {};
+      const level = state.level || 1;
+      const name = state.name || 'Unknown Hunter';
+      const streak = state.streak || 0;
+      
+      let rankClass = '';
+      if (rank === 1) rankClass = 'top1';
+      else if (rank === 2) rankClass = 'top2';
+      else if (rank === 3) rankClass = 'top3';
+      
+      listHTML += `
+        <li class="leaderboard-item">
+          <div class="rank ${rankClass}">
+            ${rank === 1 ? '👑' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank}
+          </div>
+          <div class="player-info">
+            <span class="player-name">${name}</span>
+            <div class="player-stats">
+              <div class="stat">
+                <span class="stat-label">Level</span>
+                <span class="stat-value">LV ${level}</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Streak</span>
+                <span class="stat-value">${streak}d</span>
+              </div>
+            </div>
+          </div>
+        </li>
+      `;
+      
+      rank++;
+    });
+    
+    listHTML += '</ul>';
+    container.innerHTML = listHTML;
+    
+  } catch (error) {
+    console.error('Leaderboard error:', error);
+    document.getElementById('leaderboardContainer').innerHTML = 
+      '<div class="empty-state">⚠️ Error loading leaderboard. Check back soon!</div>';
+  }
+}
+
+// Load on page open
+loadLeaderboard();
+
+// Refresh every 30 seconds
+setInterval(loadLeaderboard, 30000);
+</script>
+
+</body>
+</html>
