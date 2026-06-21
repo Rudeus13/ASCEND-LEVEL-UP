@@ -52,7 +52,7 @@ body{
   mix-blend-mode:overlay;
 }
 
-.wrap{ max-width:480px; margin:0 auto; padding:20px 16px 60px; position:relative; }
+.wrap{ max-width:480px; margin:0 auto; padding:12px 12px 40px; position:relative; }
 
 .boot{
   min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -65,7 +65,7 @@ body{
 @keyframes fadeIn{to{opacity:1;}}
 .hidden{display:none !important;}
 
-.frame{ position:relative; padding:2px; clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); background:linear-gradient(135deg, var(--glow), rgba(45,212,255,0.15)); margin-bottom:16px; box-shadow:0 0 16px var(--glow-soft); }
+.frame{ position:relative; padding:2px; clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); background:linear-gradient(135deg, var(--glow), rgba(45,212,255,0.15)); margin-bottom:12px; box-shadow:0 0 16px var(--glow-soft); }
 .frame.pulse{ animation:pulse 3s ease-in-out infinite; }
 @keyframes pulse{0%,100%{box-shadow:0 0 16px var(--glow-soft);}50%{box-shadow:0 0 28px var(--glow-soft);}}
 .frame-inner{ background:var(--panel); clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); padding:18px; }
@@ -114,7 +114,7 @@ body{
 .history-row .fail{ color:var(--danger); }
 .empty-state{ color:var(--text-dim); font-size:13px; text-align:center; padding:10px 0; }
 
-footer{ text-align:center; margin-top:24px; padding-top:16px; border-top:1px solid rgba(45,212,255,0.15); }
+footer{ text-align:center; margin-top:16px; padding-top:12px; border-top:1px solid rgba(45,212,255,0.15); }
 .footer-links{ display:flex; justify-content:center; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
 .footer-links a{ color:var(--text-dim); text-decoration:none; font-size:11px; font-family:'Share Tech Mono',monospace; letter-spacing:1px; }
 .footer-links a:hover{ color:var(--glow); }
@@ -136,13 +136,13 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 .support-btn{ background:var(--gold); border:none; color:var(--bg); font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); }
 
 /* Landing Section Styles */
-.landing-section{ padding:20px 0; }
-.landing-title{ font-family:'Share Tech Mono',monospace; font-size:24px; color:var(--glow); text-align:center; margin-bottom:12px; letter-spacing:2px; }
-.landing-subtitle{ font-size:14px; color:var(--text); text-align:center; margin-bottom:16px; line-height:1.6; }
-.landing-features{ list-style:none; padding:0; margin:16px 0; }
-.landing-features li{ font-size:13px; color:var(--text-dim); padding:8px 0; padding-left:20px; position:relative; }
-.landing-features li::before{ content:'⬤'; position:absolute; left:0; color:var(--glow); }
-.ad-container{ margin:16px 0; min-height:250px; text-align:center; }
+.landing-section{ padding:12px 0; margin-bottom:8px; }
+.landing-title{ font-family:'Share Tech Mono',monospace; font-size:22px; color:var(--glow); text-align:center; margin-bottom:8px; letter-spacing:2px; }
+.landing-subtitle{ font-size:13px; color:var(--text); text-align:center; margin-bottom:10px; line-height:1.5; }
+.landing-features{ list-style:none; padding:0; margin:8px 0; }
+.landing-features li{ font-size:12px; color:var(--text-dim); padding:4px 0; padding-left:16px; position:relative; }
+.landing-features li::before{ content:'⬭'; position:absolute; left:0; color:var(--glow); font-size:10px; }
+.ad-container{ margin:12px 0; min-height:100px; text-align:center; }
 
 /* Ad placement styles */
 .adsbygoogle{ display:block; }
@@ -168,7 +168,7 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
         Gamify Your Fitness Journey. Track workouts, complete quests, and level up like a hunter.
       </div>
       <ul class="landing-features">
-        <li>Solo Leveling-inspired rank system</li>
+        <li>Epic RPG-inspired rank system (E to S ranks)</li>
         <li>Daily quest tracking with XP rewards</li>
         <li>Real-time stat allocation</li>
         <li>Offline-first PWA technology</li>
@@ -188,7 +188,7 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
     </script>
   </div>
 
-  <div style="text-align:right; margin-bottom:12px; display:flex; gap:8px; justify-content:flex-end;">
+  <div style="text-align:right; margin-bottom:8px; display:flex; gap:8px; justify-content:flex-end;">
     <a href="/leaderboard.html" style="background:#fbbf24; border:none; color:#060912; font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); text-decoration:none; display:inline-block;">🏆 Leaderboard</a>
     <button class="support-btn" id="supportBtn">☕ Support</button>
   </div>
