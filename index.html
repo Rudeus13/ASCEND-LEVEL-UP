@@ -682,6 +682,16 @@ function hideAuthModal() {
   document.getElementById('authModal').classList.add('hidden');
 }
 
+function showNotification(tag, msg) {
+  const container = document.getElementById('notifyContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `<div class="tag">${tag}</div><div class="msg">${msg}</div>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 350); }, 3000);
+}
+
 async function handleSignup() {
   const name = document.getElementById('signupName').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
@@ -900,23 +910,15 @@ document.getElementById('modalOverlay')?.addEventListener('click', hideAuthModal
     render();
     loadLeaderboard();
     
-    // Show auth modal only on first load if not logged in
-    if (!hasSeenAuthModal && !authUser) {
-      await sleep(2000);
-      showAuthModal('signin');
-    }
-    
     document.getElementById('nameInput').addEventListener('change', (e)=>{
       state.name = e.target.value.trim() || 'Hunter';
       persistAndRender();
     });
     document.getElementById('newQuestName').addEventListener('keydown', (e)=>{ if(e.key==='Enter') addQuest(); });
     
-    if(!hasSeenAuthModal || authUser) {
-      await sleep(1700);
-      document.getElementById('boot').classList.add('hidden');
-      document.getElementById('app').classList.remove('hidden');
-    }
+    await sleep(1700);
+    document.getElementById('boot').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
     saveState(state);
   });
   
