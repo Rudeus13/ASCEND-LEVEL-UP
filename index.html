@@ -131,13 +131,121 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 @media(max-width:360px){ .stats-grid{ grid-template-columns:1fr; } }
 
 .support-btn{ background:var(--gold); border:none; color:var(--bg); font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); }
+
+/* LEADERBOARD STYLES */
+.tab-nav{ display:flex; gap:8px; margin-bottom:16px; }
+.tab-btn{ background:var(--panel); border:1px solid rgba(45,212,255,0.3); color:var(--text-dim); padding:10px 16px; font-family:'Rajdhani',sans-serif; font-size:13px; cursor:pointer; clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px); transition:all .3s ease; }
+.tab-btn.active{ background:var(--glow); color:var(--bg); border-color:var(--glow); box-shadow:0 0 12px var(--glow-soft); }
+.tab-btn:hover:not(.active){ border-color:var(--glow); color:var(--text); }
+
+.leaderboard-filters{ display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+.filter-btn{ background:var(--bg-deep); border:1px solid rgba(45,212,255,0.25); color:var(--text-dim); padding:6px 12px; font-family:'Share Tech Mono',monospace; font-size:11px; cursor:pointer; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); transition:all .3s ease; }
+.filter-btn.active{ background:var(--glow); color:var(--bg); border-color:var(--glow); box-shadow:0 0 8px var(--glow-soft); }
+
+.leaderboard-search{ margin-bottom:12px; }
+.leaderboard-search input{ width:100%; background:var(--bg-deep); border:1px solid rgba(45,212,255,0.25); color:var(--text); padding:8px 10px; font-family:'Rajdhani',sans-serif; font-size:13px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); }
+.leaderboard-search input:focus{ outline:none; border-color:var(--glow); background:rgba(45,212,255,0.05); }
+
+.leaderboard-container{ max-height:600px; overflow-y:auto; }
+.leaderboard-row{ display:grid; grid-template-columns:40px 1fr 60px 80px; gap:12px; align-items:center; padding:10px; border-bottom:1px solid rgba(45,212,255,0.1); font-family:'Share Tech Mono',monospace; font-size:12px; }
+.leaderboard-row:last-child{ border-bottom:none; }
+.leaderboard-row.you-row{ background:rgba(45,212,255,0.1); border-left:3px solid var(--glow); }
+
+.lb-rank{ text-align:center; color:var(--gold); font-weight:700; }
+.lb-rank.top3{ color:var(--glow); font-size:14px; }
+.lb-name{ color:var(--text-bright); word-break:break-word; }
+.lb-level{ text-align:center; color:var(--text-dim); }
+.lb-xp{ text-align:right; color:var(--glow); }
+
+.your-rank-banner{ background:rgba(45,212,255,0.15); border:2px solid var(--glow); padding:12px; margin-bottom:12px; text-align:center; clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px); box-shadow:0 0 12px var(--glow-soft); }
+.your-rank-banner .rank{ font-family:'Share Tech Mono',monospace; font-size:24px; color:var(--glow); font-weight:700; }
+.your-rank-banner .info{ font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--text-dim); margin-top:4px; }
+
+.lb-empty{ text-align:center; color:var(--text-dim); padding:20px; font-size:13px; }
+
+.lb-header{ display:grid; grid-template-columns:40px 1fr 60px 80px; gap:12px; padding:10px; border-bottom:2px solid var(--glow); margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; }
+
+/* Scrollbar styling */
+.leaderboard-container::-webkit-scrollbar{ width:6px; }
+.leaderboard-container::-webkit-scrollbar-track{ background:var(--bg-deep); }
+.leaderboard-container::-webkit-scrollbar-thumb{ background:var(--glow); border-radius:3px; }
+.leaderboard-container::-webkit-scrollbar-thumb:hover{ background:#7ee8ff; }
+
+/* AUTH MODAL STYLES */
+.modal{ position:fixed; inset:0; z-index:9998; display:flex; align-items:center; justify-content:center; }
+.modal.hidden{ display:none; }
+.modal-overlay{ position:absolute; inset:0; background:rgba(0,0,0,0.8); backdrop-filter:blur(4px); }
+.modal-content{ position:relative; z-index:9999; background:var(--panel); border:2px solid var(--glow); padding:30px; max-width:400px; width:90%; clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); box-shadow:0 0 40px var(--glow-soft); }
+
+.auth-form{ display:flex; flex-direction:column; gap:15px; }
+.auth-form.hidden{ display:none; }
+.auth-form h3{ font-family:'Share Tech Mono',monospace; font-size:20px; color:var(--glow); margin:0 0 8px; letter-spacing:2px; }
+.auth-subtitle{ font-size:12px; color:var(--text-dim); margin:0; }
+
+.auth-input{ background:var(--bg-deep); border:1px solid rgba(45,212,255,0.25); color:var(--text); padding:12px; font-family:'Rajdhani',sans-serif; font-size:14px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); transition:all .3s ease; }
+.auth-input:focus{ outline:none; border-color:var(--glow); background:rgba(45,212,255,0.08); }
+.auth-input::placeholder{ color:var(--text-dim); }
+
+.auth-btn{ background:var(--glow); color:var(--bg); border:none; padding:12px; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:14px; cursor:pointer; clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px); transition:all .3s ease; }
+.auth-btn:hover{ background:#7ee8ff; box-shadow:0 0 20px var(--glow-soft); }
+.auth-btn:disabled{ opacity:0.5; cursor:not-allowed; }
+.auth-btn.logout{ background:var(--danger); color:white; }
+.auth-btn.logout:hover{ background:#ff6666; }
+
+.auth-toggle{ font-size:12px; color:var(--text-dim); text-align:center; margin:0; }
+.link-btn{ background:none; border:none; color:var(--glow); cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; text-decoration:underline; padding:0; }
+.link-btn:hover{ color:#7ee8ff; }
+
+.user-info{ background:rgba(45,212,255,0.1); border:1px solid rgba(45,212,255,0.3); padding:15px; border-radius:6px; margin:10px 0; }
+.user-email{ font-family:'Share Tech Mono',monospace; color:var(--glow); font-size:13px; margin-bottom:6px; word-break:break-all; }
+.user-id{ font-family:'Share Tech Mono',monospace; color:var(--text-dim); font-size:11px; }
 </style>
 </head>
 <body>
 <div class="scanlines"></div>
 <div class="notify-container" id="notifyContainer"></div>
 
-<div class="boot" id="boot">
+<!-- AUTH MODAL -->
+<div class="modal hidden" id="authModal">
+  <div class="modal-overlay" id="modalOverlay"></div>
+  <div class="modal-content">
+    <!-- SIGNIN FORM -->
+    <div id="signinForm" class="auth-form">
+      <h3>SIGN IN</h3>
+      <p class="auth-subtitle">Access your account</p>
+      <input type="email" id="signinEmail" placeholder="Email" class="auth-input" />
+      <input type="password" id="signinPassword" placeholder="Password" class="auth-input" />
+      <button class="auth-btn" id="signinBtn">Sign In</button>
+      <p class="auth-toggle">No account? <button class="link-btn" id="toSignupBtn">Sign Up</button></p>
+      <button class="link-btn" id="skipSigninBtn">Skip & Continue Anonymous</button>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" class="auth-form hidden">
+      <h3>CREATE ACCOUNT</h3>
+      <p class="auth-subtitle">Save your progress across devices</p>
+      <input type="text" id="signupName" placeholder="Hunter Name" class="auth-input" maxlength="20" />
+      <input type="email" id="signupEmail" placeholder="Email" class="auth-input" />
+      <input type="password" id="signupPassword" placeholder="Password (min 6)" class="auth-input" />
+      <input type="password" id="signupPassword2" placeholder="Confirm Password" class="auth-input" />
+      <button class="auth-btn" id="signupBtn">Create Account</button>
+      <p class="auth-toggle">Already have account? <button class="link-btn" id="toSigninBtn">Sign In</button></p>
+      <button class="link-btn" id="skipSignupBtn">Skip & Continue Anonymous</button>
+    </div>
+
+    <!-- LOGGED IN -->
+    <div id="loggedInForm" class="auth-form hidden">
+      <h3>LOGGED IN</h3>
+      <div class="user-info">
+        <div class="user-email" id="userEmailDisplay">user@email.com</div>
+        <div class="user-id" id="userIdDisplay">ID: ...</div>
+      </div>
+      <button class="auth-btn logout" id="logoutBtn">Log Out</button>
+    </div>
+  </div>
+</div>
+
+<div class="scanlines"></div>
   <div class="line">[ SYSTEM ]</div>
   <div class="line">Initializing Hunter Interface...</div>
   <div class="line">Status: <span style="color:#4ade80">ONLINE</span></div>
@@ -195,6 +303,40 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
     </div>
   </div>
 
+  <div class="frame">
+    <div class="frame-inner">
+      <h2 class="section-title">Leaderboard</h2>
+      
+      <div class="leaderboard-search">
+        <input type="text" id="searchPlayer" placeholder="Search player name..." />
+      </div>
+
+      <div class="leaderboard-filters" id="filtersContainer">
+        <button class="filter-btn active" data-sort="xp">By XP</button>
+        <button class="filter-btn" data-sort="level">By Level</button>
+        <button class="filter-btn" data-sort="str">Strength</button>
+        <button class="filter-btn" data-sort="dex">Dexterity</button>
+      </div>
+
+      <div class="your-rank-banner" id="yourRankBanner" style="display:none;">
+        <div>Your Rank</div>
+        <div class="rank" id="yourRankNumber">#1</div>
+        <div class="info" id="yourRankInfo">Loading...</div>
+      </div>
+
+      <div class="lb-header">
+        <div>Rank</div>
+        <div>Hunter</div>
+        <div>Lv</div>
+        <div>XP</div>
+      </div>
+
+      <div class="leaderboard-container" id="leaderboardList">
+        <div class="lb-empty">Loading leaderboard...</div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <button class="reset-link" id="resetBtn">Reset all progress</button>
     <div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 1px solid rgba(45, 212, 255, 0.2); font-size: 12px; color: #5b7088;">
@@ -212,8 +354,8 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 <script type="module">
 // ============ FIREBASE INITIALIZATION ============
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { getAuth, signInAnonymously, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
 // YOUR FIREBASE CONFIG - REPLACE WITH YOUR CONFIG
 const firebaseConfig = {
@@ -230,6 +372,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentUser = null;
+let authUser = null;
 let unsubscribeSnapshot = null;
 let isFirebaseSyncing = false;
 
@@ -507,13 +650,231 @@ function openSupport(){
   window.location.href = upiLink;
 }
 
+// ============ LEADERBOARD FUNCTIONS ============
+let allPlayers = [];
+let currentSortType = 'xp';
+let searchQuery = '';
+
+// ============ AUTH FUNCTIONS ============
+let hasSeenAuthModal = false;
+
+function showAuthModal(form = 'signin') {
+  hasSeenAuthModal = true;
+  document.getElementById('authModal').classList.remove('hidden');
+  document.getElementById('signinForm').classList.add('hidden');
+  document.getElementById('signupForm').classList.add('hidden');
+  document.getElementById('loggedInForm').classList.add('hidden');
+  
+  if (authUser) {
+    document.getElementById('loggedInForm').classList.remove('hidden');
+    document.getElementById('userEmailDisplay').textContent = authUser.email || 'Connected';
+    document.getElementById('userIdDisplay').textContent = 'ID: ' + authUser.uid.substring(0, 12) + '...';
+  } else {
+    if (form === 'signup') {
+      document.getElementById('signupForm').classList.remove('hidden');
+    } else {
+      document.getElementById('signinForm').classList.remove('hidden');
+    }
+  }
+}
+
+function hideAuthModal() {
+  document.getElementById('authModal').classList.add('hidden');
+}
+
+async function handleSignup() {
+  const name = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const password2 = document.getElementById('signupPassword2').value;
+  
+  if (!name || !email || !password) {
+    showNotification('ERROR', 'All fields required');
+    return;
+  }
+  
+  if (password.length < 6) {
+    showNotification('ERROR', 'Password must be 6+ characters');
+    return;
+  }
+  
+  if (password !== password2) {
+    showNotification('ERROR', 'Passwords do not match');
+    return;
+  }
+  
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    authUser = userCredential.user;
+    state.name = name;
+    state.email = email;
+    await saveState(state);
+    showNotification('SUCCESS', 'Account created!');
+    hideAuthModal();
+    render();
+  } catch (error) {
+    showNotification('ERROR', error.message);
+  }
+}
+
+async function handleSignin() {
+  const email = document.getElementById('signinEmail').value.trim();
+  const password = document.getElementById('signinPassword').value;
+  
+  if (!email || !password) {
+    showNotification('ERROR', 'Email and password required');
+    return;
+  }
+  
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    authUser = userCredential.user;
+    await loadState();
+    showNotification('SUCCESS', 'Signed in!');
+    hideAuthModal();
+    render();
+  } catch (error) {
+    showNotification('ERROR', error.message);
+  }
+}
+
+async function handleLogout() {
+  try {
+    await signOut(auth);
+    authUser = null;
+    state = defaultState();
+    saveState(state);
+    showNotification('SUCCESS', 'Logged out');
+    hideAuthModal();
+    render();
+  } catch (error) {
+    showNotification('ERROR', error.message);
+  }
+}
+
+// ============ LEADERBOARD FUNCTIONS ============
+async function loadLeaderboard() {
+  const q = query(collection(db, 'hunters'), orderBy('xp', 'desc'), limit(500));
+  onSnapshot(q, (snapshot) => {
+    allPlayers = [];
+    snapshot.docs.forEach(doc => {
+      allPlayers.push({ uid: doc.id, ...doc.data() });
+    });
+    renderLeaderboard();
+  });
+}
+
+function sortPlayers(players, type) {
+  const sorted = [...players];
+  if (type === 'xp') {
+    return sorted.sort((a, b) => (b.xp || 0) - (a.xp || 0));
+  } else if (type === 'level') {
+    return sorted.sort((a, b) => (b.level || 1) - (a.level || 1));
+  } else if (type === 'str') {
+    return sorted.sort((a, b) => (b.stats?.STR || 1) - (a.stats?.STR || 1));
+  } else if (type === 'dex') {
+    return sorted.sort((a, b) => (b.stats?.DEX || 1) - (a.stats?.DEX || 1));
+  }
+  return sorted;
+}
+
+function filterPlayers(players, search) {
+  if (!search.trim()) return players;
+  return players.filter(p => 
+    (p.name || 'Hunter').toLowerCase().includes(search.toLowerCase())
+  );
+}
+
+function renderLeaderboard() {
+  let displayed = sortPlayers(allPlayers, currentSortType);
+  displayed = filterPlayers(displayed, searchQuery);
+  
+  const container = document.getElementById('leaderboardList');
+  const yourBanner = document.getElementById('yourRankBanner');
+  
+  if (displayed.length === 0) {
+    container.innerHTML = '<div class="lb-empty">No players found</div>';
+    yourBanner.style.display = 'none';
+    return;
+  }
+  
+  // Find your rank
+  let yourRank = -1;
+  const myUid = authUser?.uid || currentUser?.uid;
+  for (let i = 0; i < displayed.length; i++) {
+    if (displayed[i].uid === myUid) {
+      yourRank = i + 1;
+      break;
+    }
+  }
+  
+  if (yourRank > 0) {
+    yourBanner.style.display = 'block';
+    document.getElementById('yourRankNumber').textContent = '#' + yourRank;
+    const yourPlayer = displayed[yourRank - 1];
+    document.getElementById('yourRankInfo').textContent = 
+      (yourPlayer.name || 'Hunter') + ' • Level ' + (yourPlayer.level || 1) + ' • ' + (yourPlayer.xp || 0) + ' XP';
+  } else {
+    yourBanner.style.display = 'none';
+  }
+  
+  // Display top 100
+  const top100 = displayed.slice(0, 100);
+  container.innerHTML = '';
+  
+  top100.forEach((player, idx) => {
+    const rank = idx + 1;
+    const row = document.createElement('div');
+    row.className = 'leaderboard-row' + (player.uid === myUid ? ' you-row' : '');
+    
+    const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+    const rankClass = rank <= 3 ? 'lb-rank top3' : 'lb-rank';
+    
+    row.innerHTML = `
+      <div class="${rankClass}">${medal || '#' + rank}</div>
+      <div class="lb-name">${escapeHtml(player.name || 'Hunter')}</div>
+      <div class="lb-level">Lv${player.level || 1}</div>
+      <div class="lb-xp">${(player.xp || 0).toLocaleString()}</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
 document.addEventListener('click', (e)=>{
   if(e.target.matches('.q-check')) toggleQuest(e.target.dataset.id);
   if(e.target.matches('.q-del')) deleteQuest(e.target.dataset.id);
   if(e.target.matches('.stat-plus')) allocateStat(e.target.dataset.stat);
   if(e.target.id==='addQuestBtn') addQuest();
   if(e.target.id==='resetBtn') resetAll();
+  if(e.target.matches('.filter-btn')) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentSortType = e.target.dataset.sort;
+    renderLeaderboard();
+  }
+  
+  // AUTH BUTTONS
+  if(e.target.id==='signupBtn') handleSignup();
+  if(e.target.id==='signinBtn') handleSignin();
+  if(e.target.id==='logoutBtn') handleLogout();
+  if(e.target.id==='toSignupBtn') {
+    document.getElementById('signinForm').classList.add('hidden');
+    document.getElementById('signupForm').classList.remove('hidden');
+  }
+  if(e.target.id==='toSigninBtn') {
+    document.getElementById('signupForm').classList.add('hidden');
+    document.getElementById('signinForm').classList.remove('hidden');
+  }
+  if(e.target.id==='skipSigninBtn' || e.target.id==='skipSignupBtn') hideAuthModal();
 });
+
+document.getElementById('searchPlayer')?.addEventListener('input', (e) => {
+  searchQuery = e.target.value;
+  renderLeaderboard();
+});
+
+// Close modal on overlay click
+document.getElementById('modalOverlay')?.addEventListener('click', hideAuthModal);
 
 // ============ INITIALIZATION ============
 (async function init(){
@@ -521,6 +882,7 @@ document.addEventListener('click', (e)=>{
   
   onAuthStateChanged(auth, async (user) => {
     if(user){
+      authUser = user;
       currentUser = user;
       const loaded = await loadState();
       state = loaded || defaultState();
@@ -528,6 +890,7 @@ document.addEventListener('click', (e)=>{
       applyDailyReset();
       setupFirebaseListener(user.uid);
     } else {
+      authUser = null;
       const loaded = await loadState();
       state = loaded || defaultState();
       if(state.bonusGiven===undefined) state.bonusGiven=false;
@@ -535,18 +898,29 @@ document.addEventListener('click', (e)=>{
     }
     
     render();
+    loadLeaderboard();
+    
+    // Show auth modal only on first load if not logged in
+    if (!hasSeenAuthModal && !authUser) {
+      await sleep(2000);
+      showAuthModal('signin');
+    }
+    
     document.getElementById('nameInput').addEventListener('change', (e)=>{
       state.name = e.target.value.trim() || 'Hunter';
       persistAndRender();
     });
     document.getElementById('newQuestName').addEventListener('keydown', (e)=>{ if(e.key==='Enter') addQuest(); });
-    await sleep(1700);
-    document.getElementById('boot').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
+    
+    if(!hasSeenAuthModal || authUser) {
+      await sleep(1700);
+      document.getElementById('boot').classList.add('hidden');
+      document.getElementById('app').classList.remove('hidden');
+    }
     saveState(state);
   });
   
-  // Try to sign in anonymously
+  // Try to sign in anonymously (fallback)
   try{
     await signInAnonymously(auth);
   } catch(err){
