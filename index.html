@@ -456,4 +456,96 @@ function render(){
     const row = document.createElement('div');
     row.className = 'stat-row';
     row.innerHTML = '<span class="stat-name">'+key+'</span><span class="stat-val">'+state.stats[key]+
-      '<but
+      '<button class="stat-plus" data-stat="'+key+'" '+(state.unallocated<=0?'disabled':'')+'>+</button></span>';
+    statsGrid.appendChild(row);
+  });
+  const pb = document.getElementById('pointsBanner');
+  if(state.unallocated>0){ pb.classList.remove('hidden'); pb.textContent = '+'+state.unallocated+' points available to allocate'; }
+  else { pb.classList.add('hidden'); }
+
+  const ql = document.getElementById('questList');
+  ql.innerHTML = '';
+  if(state.quests.length===0){ ql.innerHTML = '<div class="empty-state">No quests yet. Add one below.</div>'; }
+  state.quests.forEach(q=>{
+    const row = document.createElement('div');
+    row.className = 'quest-row';
+    row.innerHTML =
+      '<button class="q-check '+(q.done?'done':'')+'" data-id="'+q.id+'">'+(q.done?'✓':'')+'</button>'+
+      '<span class="q-name '+(q.done?'done':'')+'">'+escapeHtml(q.name)+'</span>'+
+      '<span class="q-xp">+'+q.xp+'xp</span>'+
+      '<button class="q-del" data-id="'+q.id+'">×</button>';
+    ql.appendChild(row);
+  });
+
+  const hl = document.getElementById('historyList');
+  hl.innerHTML = '';
+  if(state.history.length===0){ hl.innerHTML = '<div class="empty-state">Your quest history will appear here.</div>'; }
+  state.history.forEach(h=>{
+    const row = document.createElement('div');
+    row.className = 'history-row';
+    row.innerHTML = '<span>'+h.date+'</span><span class="'+(h.completed?'ok':'fail')+'">'+
+      (h.completed?'CLEARED':'FAILED')+' ('+h.count+'/'+h.total+')</span>';
+    hl.appendChild(row);
+  });
+}
+
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ============ SUPPORT BUTTON ============
+function openSupport(){
+  const upiLink = 'upi://pay?pa=arora13rudeus@fam&pn=Ascend%20Level%20Up&tn=Support%20Ascend&am=';
+  window.location.href = upiLink;
+}
+
+document.addEventListener('click', (e)=>{
+  if(e.target.matches('.q-check')) toggleQuest(e.target.dataset.id);
+  if(e.target.matches('.q-del')) deleteQuest(e.target.dataset.id);
+  if(e.target.matches('.stat-plus')) allocateStat(e.target.dataset.stat);
+  if(e.target.id==='addQuestBtn') addQuest();
+  if(e.target.id==='resetBtn') resetAll();
+});
+
+// ============ INITIALIZATION ============
+(async function init(){
+  document.getElementById('supportBtn').addEventListener('click', openSupport);
+  
+  onAuthStateChanged(auth, async (user) => {
+    if(user){
+      currentUser = user;
+      const loaded = await loadState();
+      state = loaded || defaultState();
+      if(state.bonusGiven===undefined) state.bonusGiven=false;
+      applyDailyReset();
+      setupFirebaseListener(user.uid);
+    } else {
+      const loaded = await loadState();
+      state = loaded || defaultState();
+      if(state.bonusGiven===undefined) state.bonusGiven=false;
+      applyDailyReset();
+    }
+    
+    render();
+    document.getElementById('nameInput').addEventListener('change', (e)=>{
+      state.name = e.target.value.trim() || 'Hunter';
+      persistAndRender();
+    });
+    document.getElementById('newQuestName').addEventListener('keydown', (e)=>{ if(e.key==='Enter') addQuest(); });
+    await sleep(1700);
+    document.getElementById('boot').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    saveState(state);
+  });
+  
+  // Try to sign in anonymously
+  try{
+    await signInAnonymously(auth);
+  } catch(err){
+    console.error('Auth error:', err);
+  }
+})();
+
+</script>
+</body>
+</html>
