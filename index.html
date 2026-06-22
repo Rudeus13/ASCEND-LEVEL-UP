@@ -335,7 +335,7 @@ let state = defaultState();
 function saveState(s){
   localStorage.setItem('hunterState', JSON.stringify(s));
   if(currentUser){
-    setDoc(doc(db, 'users', currentUser.uid), {state:s}, {merge:true}).catch(e=>console.error('Firestore save error:', e));
+    setDoc(doc(db, 'users', currentUser.uid), {...s}, {merge:true})
   }
 }
 
