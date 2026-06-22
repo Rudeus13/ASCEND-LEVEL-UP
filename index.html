@@ -162,183 +162,245 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
       <div class="xp-bar-bg"><div class="xp-bar-fill" id="xpFill" style="width:0%"></div></div>
       <div class="xp-label" id="xpLabel">0 / 100 XP</div>
       <div class="streak-row">
-        <span>CURRENT STREAK</span>
-        <span><b id="streakVal">0</b> days</span>
+        <span>Streak: <b id="streakVal">0</b> days</span>
+        <span id="todayDate"></span>
       </div>
-      <div class="stats-grid" id="statsGrid"></div>
-      <div class="points-banner hidden" id="pointsBanner">+1 points available</div>
     </div>
   </div>
 
   <div class="frame">
     <div class="frame-inner">
-      <h2 class="section-title">Daily Quests</h2>
+      <h2 class="section-title">Stats</h2>
+      <div class="stats-grid" id="statsGrid"></div>
+      <div class="points-banner hidden" id="pointsBanner"></div>
+    </div>
+  </div>
+
+  <div class="frame">
+    <div class="frame-inner">
+      <h2 class="section-title">Daily Quest</h2>
       <div id="questList"></div>
       <div class="add-quest">
-        <input type="text" id="newQuestName" placeholder="Quest name..." />
-        <input type="number" id="newQuestXp" class="xp-input" value="15" min="1" max="200" />
-        <button class="btn" id="addQuestBtn">Add</button>
+        <input type="text" id="newQuestName" placeholder="New quest name" maxlength="40" />
+        <input type="number" id="newQuestXp" class="xp-input" placeholder="XP" min="1" max="200" value="15" />
+        <button class="btn" id="addQuestBtn">+</button>
       </div>
     </div>
   </div>
 
   <div class="frame">
     <div class="frame-inner">
-      <h2 class="section-title">Quest History</h2>
+      <h2 class="section-title">Quest Log</h2>
       <div id="historyList"></div>
     </div>
   </div>
 
-  <div style="text-align:center; margin-top:20px;">
-    <a href="/leaderboard.html" style="color:var(--glow); text-decoration:none; font-size:13px;">View Leaderboard →</a>
-  </div>
-
   <footer>
-    <button class="reset-link" id="resetBtn">Reset Progress</button>
+    <button class="reset-link" id="resetBtn">Reset all progress</button>
+    <div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 1px solid rgba(45, 212, 255, 0.2); font-size: 12px; color: #5b7088;">
+      <a href="about-contact.html" style="color: #2dd4ff; text-decoration: none; margin: 0 15px;">📖 About Us</a>
+      <span style="color: #2dd4ff;">|</span>
+      <a href="about-contact.html" style="color: #2dd4ff; text-decoration: none; margin: 0 15px;">📧 Contact Us</a>
+      <span style="color: #2dd4ff;">|</span>
+      <a href="https://ascend-level-up.vercel.app/" style="color: #2dd4ff; text-decoration: none; margin: 0 15px;">🏠 Home</a>
+      <p style="margin-top: 10px; color: #3d5a80;">© 2026 Ascend Level Up | Built with ❤️</p>
+    </div>
   </footer>
+
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+// ============ FIREBASE INITIALIZATION ============
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
-// ============ FIREBASE SETUP ============
+// YOUR FIREBASE CONFIG - REPLACE WITH YOUR CONFIG
 const firebaseConfig = {
-  apiKey: "AIzaSyDjpLq6w0sJBd67MdyDT2LIoSL64q3kqXA",
-  authDomain: "ascend-levelup.firebaseapp.com",
-  projectId: "ascend-levelup",
-  storageBucket: "ascend-levelup.appspot.com",
-  messagingSenderId: "779627849838",
-  appId: "1:779627849838:web:ba3c7c78a2f07a7dd68159"
+  apiKey: "AIzaSyCNwC_JNHtp8R1XaTAkp_bPJ3sbqh-jfQ",
+  authDomain: "ascend-level-up.firebaseapp.com",
+  projectId: "ascend-level-up",
+  storageBucket: "ascend-level-up.firebasestorage.app",
+  messagingSenderId: "644326876476",
+  appId: "1:644326876476:web:a5c5ae5f6b8a05a896b8e0"
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ============ STATE & PERSISTENCE ============
-let state, currentUser;
+let currentUser = null;
+let unsubscribeSnapshot = null;
+let isFirebaseSyncing = false;
+
+// ============ STATE & RANK SYSTEM ============
+let state = {};
+const rankTable = [
+  {min:0, name:'E', color:'#94a3b8'},
+  {min:10, name:'D', color:'#60a5fa'},
+  {min:25, name:'C', color:'#34d399'},
+  {min:45, name:'B', color:'#fbbf24'},
+  {min:70, name:'A', color:'#f87171'},
+  {min:100, name:'S', color:'#a78bfa'},
+];
 
 function defaultState(){
   return {
-    name: 'Hunter',
-    level: 1,
-    xp: 0,
-    stats: { STR: 10, INT: 10, STA: 10, AGI: 10 },
-    unallocated: 0,
-    quests: [],
-    bonusGiven: false,
-    streak: 0,
-    lastDate: new Date().toLocaleDateString(),
-    history: []
+    name:'Hunter',
+    level:1,
+    xp:0,
+    stats:{STR:1, DEX:1, INT:1, VIT:1, WIS:1, LCK:1},
+    quests:[],
+    history:[],
+    streak:0,
+    lastDate:todayStr(),
+    unallocated:0,
+    bonusGiven:false,
   };
 }
 
-function saveState(s){
-  localStorage.setItem('hunterState', JSON.stringify(s));
+function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0')+'-'+d.getDate().toString().padStart(2,'0'); }
+function xpNeeded(lvl){ return Math.round(100*(1.05**lvl)); }
+function rankFor(lvl){ return rankTable.reduce((a,b)=>lvl>=b.min?b:a); }
+
+// ============ FIREBASE SYNC ============
+async function saveStateToFirebase(stateObj){
+  if(!currentUser || isFirebaseSyncing) return;
+  try{
+    isFirebaseSyncing = true;
+    const userDocRef = doc(db, 'hunters', currentUser.uid);
+    await setDoc(userDocRef, {
+      name: stateObj.name,
+      level: stateObj.level,
+      xp: stateObj.xp,
+      stats: stateObj.stats,
+      quests: stateObj.quests,
+      history: stateObj.history,
+      streak: stateObj.streak,
+      lastDate: stateObj.lastDate,
+      unallocated: stateObj.unallocated,
+      bonusGiven: stateObj.bonusGiven,
+      lastUpdated: new Date().toISOString(),
+    });
+    localStorage.setItem('hunterState', JSON.stringify(stateObj));
+  } catch(err){
+    console.error('Firebase save error:', err);
+  } finally{
+    isFirebaseSyncing = false;
+  }
 }
 
-async function loadState(){
-  const local = localStorage.getItem('hunterState');
-  if(local) return JSON.parse(local);
-  
-  // Try to load from Firestore if user is logged in
-  if(currentUser){
-    try {
-      const docRef = doc(db, 'users', currentUser.uid);
-      const docSnap = await getDoc(docRef);
-      if(docSnap.exists()) return docSnap.data();
-    } catch(err) {
-      console.error('Failed to load from Firestore:', err);
+async function loadStateFromFirebase(userId){
+  try{
+    const userDocRef = doc(db, 'hunters', userId);
+    const docSnap = await getDoc(userDocRef);
+    if(docSnap.exists()){
+      return docSnap.data();
     }
+  } catch(err){
+    console.error('Firebase load error:', err);
   }
   return null;
 }
 
-// ============ FIREBASE SYNC - NEW FIX ============
-// This function uploads user data to Firestore after every action
-async function syncToFirebase(user, gameState){
-  if(!user) return; // No sync if not logged in
-  try {
-    const docRef = doc(db, 'users', user.uid);
-    // Store data at TOP LEVEL (not nested in 'state')
-    await setDoc(docRef, {
-      uid: user.uid,
-      name: gameState.name,
-      level: gameState.level,
-      xp: gameState.xp,
-      stats: gameState.stats,
-      unallocated: gameState.unallocated,
-      streak: gameState.streak,
-      lastDate: gameState.lastDate,
-      bonusGiven: gameState.bonusGiven,
-      history: gameState.history,
-      quests: gameState.quests,
-      lastSynced: new Date().toISOString()
-    }, { merge: true });
-    console.log('Synced to Firebase ✓');
-  } catch(err) {
-    console.error('Firebase sync failed:', err);
+function setupFirebaseListener(userId){
+  if(unsubscribeSnapshot) unsubscribeSnapshot();
+  try{
+    const userDocRef = doc(db, 'hunters', userId);
+    unsubscribeSnapshot = onSnapshot(userDocRef, (doc)=>{
+      if(doc.exists()){
+        const fbData = doc.data();
+        // Only update if remote data is newer
+        if(fbData && fbData.lastUpdated > new Date(state.lastUpdated || 0).toISOString()){
+          state = {
+            name: fbData.name || state.name,
+            level: fbData.level || state.level,
+            xp: fbData.xp !== undefined ? fbData.xp : state.xp,
+            stats: fbData.stats || state.stats,
+            quests: fbData.quests || state.quests,
+            history: fbData.history || state.history,
+            streak: fbData.streak !== undefined ? fbData.streak : state.streak,
+            lastDate: fbData.lastDate || state.lastDate,
+            unallocated: fbData.unallocated !== undefined ? fbData.unallocated : state.unallocated,
+            bonusGiven: fbData.bonusGiven !== undefined ? fbData.bonusGiven : state.bonusGiven,
+            lastUpdated: fbData.lastUpdated || new Date().toISOString(),
+          };
+          render();
+          queueNotify('SYNC', 'Progress synced from another device.', 'normal');
+        }
+      }
+    });
+  } catch(err){
+    console.error('Firebase listener error:', err);
   }
 }
 
-// ============ RANKS ============
-const ranks = [
-  {level:1, name:'E', color:'#94a3b8'},
-  {level:10, name:'D', color:'#2dd4ff'},
-  {level:20, name:'C', color:'#2dd4ff'},
-  {level:30, name:'B', color:'#4ade80'},
-  {level:40, name:'A', color:'#fbbf24'},
-  {level:50, name:'S', color:'#ff4d4d'},
-  {level:60, name:'SS', color:'#ff4d4d'},
-  {level:100, name:'SSS', color:'#fbbf24'}
-];
-function rankFor(lv){ return [...ranks].reverse().find(r=>lv>=r.level); }
+// ============ LOCAL STORAGE FALLBACK ============
+async function loadState(){
+  if(currentUser){
+    const fbState = await loadStateFromFirebase(currentUser.uid);
+    if(fbState){
+      return fbState;
+    }
+  }
+  const local = localStorage.getItem('hunterState');
+  return local ? JSON.parse(local) : null;
+}
 
-// ============ XP & LEVEL ============
-function xpNeeded(lv){ return 100 + (lv-1)*50; }
+function saveState(stateObj){
+  localStorage.setItem('hunterState', JSON.stringify(stateObj));
+  if(currentUser){
+    saveStateToFirebase(stateObj);
+  }
+}
 
-function addXP(amt){
-  state.xp += amt;
-  let leveled = false;
+// ============ UI & GAME LOGIC ============
+let notifyBusy = false;
+function queueNotify(tag, msg, style='normal'){
+  if(notifyBusy) return;
+  notifyBusy = true;
+  const container = document.getElementById('notifyContainer');
+  const toast = document.createElement('div');
+  toast.className = 'toast '+style;
+  toast.innerHTML = '<div class="tag">'+escapeHtml(tag)+'</div><div class="msg">'+escapeHtml(msg)+'</div>';
+  container.appendChild(toast);
+  setTimeout(()=>toast.classList.add('show'), 10);
+  setTimeout(()=>{
+    toast.classList.remove('show');
+    setTimeout(()=>{ container.removeChild(toast); notifyBusy=false; }, 350);
+  }, 3000);
+}
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+function applyDailyReset(){
+  const today = todayStr();
+  if(state.lastDate === today) return;
+  const hadQuests = state.quests.length>0;
+  const allDone = hadQuests && state.quests.every(q=>q.done);
+  const doneCount = state.quests.filter(q=>q.done).length;
+  if(hadQuests){
+    state.history.unshift({date:state.lastDate, completed:allDone, count:doneCount, total:state.quests.length});
+    state.history = state.history.slice(0,14);
+    state.streak = allDone ? state.streak+1 : 0;
+  }
+  state.quests.forEach(q=>q.done=false);
+  state.bonusGiven = false;
+  state.lastDate = today;
+}
+
+function addXP(amount){
+  state.xp += amount;
+  let leveled=false;
+  const prevRank = rankFor(state.level).name;
   while(state.xp >= xpNeeded(state.level)){
     state.xp -= xpNeeded(state.level);
     state.level += 1;
+    state.unallocated += 3;
     leveled = true;
   }
-  const prevRank = rankFor(state.level-1).name;
   const newRank = rankFor(state.level).name;
   if(leveled) queueNotify('SYSTEM', 'Level Up! You are now Level '+state.level+'.', 'normal');
   if(newRank !== prevRank) queueNotify('RANK UP', 'Your rank has risen to '+newRank+'-Rank.', 'rankup');
-}
-
-// ============ NOTIFICATIONS ============
-function queueNotify(tag, msg, type){
-  const container = document.getElementById('notifyContainer');
-  const toast = document.createElement('div');
-  toast.className = 'toast '+type;
-  toast.innerHTML = '<div class="tag">'+tag+'</div><div class="msg">'+msg+'</div>';
-  container.appendChild(toast);
-  toast.offsetHeight; // trigger reflow
-  toast.classList.add('show');
-  setTimeout(()=>{ toast.classList.remove('show'); setTimeout(()=>toast.remove(), 350); }, 3000);
-}
-
-// ============ DAILY RESET ============
-function applyDailyReset(){
-  const today = new Date().toLocaleDateString();
-  if(state.lastDate !== today){
-    state.lastDate = today;
-    const completed = state.quests.length>0 && state.quests.every(x=>x.done);
-    if(completed) state.history.push({date: state.lastDate, completed: true, count: state.quests.length, total: state.quests.length});
-    else if(state.quests.length>0) state.history.push({date: state.lastDate, completed: false, count: state.quests.filter(x=>x.done).length, total: state.quests.length});
-    if(!completed) state.streak = 0;
-    state.streak += 1;
-    state.quests = [];
-    state.bonusGiven = false;
-    persistAndRender();
-  }
 }
 
 function toggleQuest(id){
@@ -374,22 +436,13 @@ function addQuest(){
   nameInput.value=''; xpInput.value='15';
   persistAndRender();
 }
-
 function deleteQuest(id){ state.quests = state.quests.filter(q=>q.id!==id); persistAndRender(); }
-
 function resetAll(){
   if(!confirm('This will erase all your progress. Continue?')) return;
   state = defaultState();
   persistAndRender();
 }
-
-// ============ MAIN UPDATE ============
-// This now calls syncToFirebase() after every change
-function persistAndRender(){ 
-  saveState(state);
-  render();
-  if(currentUser) syncToFirebase(currentUser, state); // FIX: Sync to Firestore
-}
+function persistAndRender(){ saveState(state); render(); }
 
 function render(){
   const rank = rankFor(state.level);
@@ -473,6 +526,7 @@ document.addEventListener('click', (e)=>{
       state = loaded || defaultState();
       if(state.bonusGiven===undefined) state.bonusGiven=false;
       applyDailyReset();
+      setupFirebaseListener(user.uid);
     } else {
       const loaded = await loadState();
       state = loaded || defaultState();
@@ -486,19 +540,20 @@ document.addEventListener('click', (e)=>{
       persistAndRender();
     });
     document.getElementById('newQuestName').addEventListener('keydown', (e)=>{ if(e.key==='Enter') addQuest(); });
-    await new Promise(r => setTimeout(r, 1700));
+    await sleep(1700);
     document.getElementById('boot').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
     saveState(state);
   });
   
-  // Sign in anonymously
+  // Try to sign in anonymously
   try{
     await signInAnonymously(auth);
   } catch(err){
     console.error('Auth error:', err);
   }
 })();
+
 </script>
 </body>
 </html>

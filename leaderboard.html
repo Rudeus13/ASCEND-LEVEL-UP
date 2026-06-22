@@ -182,6 +182,8 @@ footer {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
+// Firebase config loaded from index.html's existing config
+// This uses the same Firebase project as your main app
 const firebaseConfig = {
   apiKey: "AIzaSyDjpLq6w0sJBd67MdyDT2LIoSL64q3kqXA",
   authDomain: "ascend-levelup.firebaseapp.com",
@@ -198,10 +200,10 @@ async function loadLeaderboard() {
   try {
     const container = document.getElementById('leaderboardContainer');
     
-    // FIX #1: Query top 10 players by LEVEL (top-level field, not nested)
+    // Query top 10 players by level (descending)
     const q = query(
       collection(db, 'users'),
-      orderBy('level', 'desc'),  // ✅ CORRECTED: was 'state.level'
+      orderBy('state.level', 'desc'),
       limit(10)
     );
     
@@ -209,11 +211,8 @@ async function loadLeaderboard() {
     
     if (snapshot.empty) {
       container.innerHTML = '<div class="empty-state">No players yet. Be the first to climb the ranks!</div>';
-      console.log('No players found in Firestore');
       return;
     }
-    
-    console.log(`Found ${snapshot.docs.length} players`);
     
     const html = '<ul class="leaderboard-list">';
     let rank = 1;
@@ -221,10 +220,10 @@ async function loadLeaderboard() {
     
     snapshot.docs.forEach((doc) => {
       const data = doc.data();
-      // FIX #2: Data is stored at top level, not nested in 'state'
-      const level = data.level || 1;
-      const name = data.name || 'Unknown Hunter';
-      const streak = data.streak || 0;
+      const state = data.state || {};
+      const level = state.level || 1;
+      const name = state.name || 'Unknown Hunter';
+      const streak = state.streak || 0;
       
       let rankClass = '';
       if (rank === 1) rankClass = 'top1';
@@ -261,7 +260,7 @@ async function loadLeaderboard() {
   } catch (error) {
     console.error('Leaderboard error:', error);
     document.getElementById('leaderboardContainer').innerHTML = 
-      '<div class="empty-state">⚠️ Error loading leaderboard. Check console for details.</div>';
+      '<div class="empty-state">⚠️ Error loading leaderboard. Check back soon!</div>';
   }
 }
 
