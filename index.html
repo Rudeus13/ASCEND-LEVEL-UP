@@ -52,7 +52,7 @@ body{
   mix-blend-mode:overlay;
 }
 
-.wrap{ max-width:480px; margin:0 auto; padding:20px 16px 60px; position:relative; }
+.wrap{ max-width:480px; margin:0 auto; padding:12px 12px 40px; position:relative; }
 
 .boot{
   min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
@@ -65,7 +65,7 @@ body{
 @keyframes fadeIn{to{opacity:1;}}
 .hidden{display:none !important;}
 
-.frame{ position:relative; padding:2px; clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); background:linear-gradient(135deg, var(--glow), rgba(45,212,255,0.15)); margin-bottom:16px; box-shadow:0 0 16px var(--glow-soft); }
+.frame{ position:relative; padding:2px; clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); background:linear-gradient(135deg, var(--glow), rgba(45,212,255,0.15)); margin-bottom:12px; box-shadow:0 0 16px var(--glow-soft); }
 .frame.pulse{ animation:pulse 3s ease-in-out infinite; }
 @keyframes pulse{0%,100%{box-shadow:0 0 16px var(--glow-soft);}50%{box-shadow:0 0 28px var(--glow-soft);}}
 .frame-inner{ background:var(--panel); clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px); padding:18px; }
@@ -114,7 +114,10 @@ body{
 .history-row .fail{ color:var(--danger); }
 .empty-state{ color:var(--text-dim); font-size:13px; text-align:center; padding:10px 0; }
 
-footer{ text-align:center; margin-top:24px; }
+footer{ text-align:center; margin-top:16px; padding-top:12px; border-top:1px solid rgba(45,212,255,0.15); }
+.footer-links{ display:flex; justify-content:center; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
+.footer-links a{ color:var(--text-dim); text-decoration:none; font-size:11px; font-family:'Share Tech Mono',monospace; letter-spacing:1px; }
+.footer-links a:hover{ color:var(--glow); }
 .reset-link{ background:none; border:none; color:var(--text-dim); font-size:11px; text-decoration:underline; cursor:pointer; font-family:'Share Tech Mono',monospace; }
 
 .notify-container{ position:fixed; top:14px; left:50%; transform:translateX(-50%); z-index:10000; width:calc(100% - 32px); max-width:440px; }
@@ -131,6 +134,18 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 @media(max-width:360px){ .stats-grid{ grid-template-columns:1fr; } }
 
 .support-btn{ background:var(--gold); border:none; color:var(--bg); font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); }
+
+/* Landing Section Styles */
+.landing-section{ padding:12px 0; margin-bottom:8px; }
+.landing-title{ font-family:'Share Tech Mono',monospace; font-size:22px; color:var(--glow); text-align:center; margin-bottom:8px; letter-spacing:2px; }
+.landing-subtitle{ font-size:13px; color:var(--text); text-align:center; margin-bottom:10px; line-height:1.5; }
+.landing-features{ list-style:none; padding:0; margin:8px 0; }
+.landing-features li{ font-size:12px; color:var(--text-dim); padding:4px 0; padding-left:16px; position:relative; }
+.landing-features li::before{ content:'⬭'; position:absolute; left:0; color:var(--glow); font-size:10px; }
+.ad-container{ margin:12px 0; min-height:100px; text-align:center; }
+
+/* Ad placement styles */
+.adsbygoogle{ display:block; }
 </style>
 </head>
 <body>
@@ -145,7 +160,36 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
 
 <div class="wrap hidden" id="app">
 
-  <div style="text-align:right; margin-bottom:12px;">
+  <!-- LANDING SECTION - Info Before App -->
+  <div id="landingSection" class="landing-section frame">
+    <div class="frame-inner">
+      <div class="landing-title">⚔️ ASCEND LEVEL UP</div>
+      <div class="landing-subtitle">
+        Gamify Your Fitness Journey. Track workouts, complete quests, and level up like a hunter.
+      </div>
+      <ul class="landing-features">
+        <li>Epic RPG-inspired rank system (E to S ranks)</li>
+        <li>Daily quest tracking with XP rewards</li>
+        <li>Real-time stat allocation</li>
+        <li>Offline-first PWA technology</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- AD PLACEMENT #1 - Top -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4347664015203404"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <div style="text-align:right; margin-bottom:8px; display:flex; gap:8px; justify-content:flex-end;">
+    <a href="/leaderboard.html" style="background:#fbbf24; border:none; color:#060912; font-weight:700; padding:8px 12px; cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:12px; clip-path:polygon(4px 0,100% 0,100% calc(100% - 4px),calc(100% - 4px) 100%,0 100%,0 4px); text-decoration:none; display:inline-block;">🏆 Leaderboard</a>
     <button class="support-btn" id="supportBtn">☕ Support</button>
   </div>
 
@@ -162,8 +206,12 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
       <div class="xp-bar-bg"><div class="xp-bar-fill" id="xpFill" style="width:0%"></div></div>
       <div class="xp-label" id="xpLabel">0 / 100 XP</div>
       <div class="streak-row">
-        <span>Streak: <b id="streakVal">0</b> days</span>
-        <span id="todayDate"></span>
+        <span>Daily Streak</span>
+        <span><b id="streakVal">0</b> days</span>
+      </div>
+      <div class="streak-row">
+        <span>Last Active</span>
+        <span id="todayDate" style="color:var(--glow);">—</span>
       </div>
     </div>
   </div>
@@ -171,58 +219,76 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
   <div class="frame">
     <div class="frame-inner">
       <h2 class="section-title">Stats</h2>
-      <div class="stats-grid" id="statsGrid"></div>
-      <div class="points-banner hidden" id="pointsBanner"></div>
+      <div id="statsGrid" class="stats-grid"></div>
+      <div id="pointsBanner" class="points-banner hidden"></div>
     </div>
   </div>
 
   <div class="frame">
     <div class="frame-inner">
-      <h2 class="section-title">Daily Quest</h2>
+      <h2 class="section-title">Daily Quests</h2>
       <div id="questList"></div>
       <div class="add-quest">
-        <input type="text" id="newQuestName" placeholder="New quest name" maxlength="40" />
-        <input type="number" id="newQuestXp" class="xp-input" placeholder="XP" min="1" max="200" value="15" />
-        <button class="btn" id="addQuestBtn">+</button>
+        <input type="text" id="newQuestName" placeholder="New quest...">
+        <input type="number" id="newQuestXp" class="xp-input" value="15" min="1" max="200">
+        <button class="btn" id="addQuestBtn">Add</button>
       </div>
     </div>
   </div>
 
+  <!-- AD PLACEMENT #2 - Middle -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4347664015203404"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
   <div class="frame">
     <div class="frame-inner">
-      <h2 class="section-title">Quest Log</h2>
+      <h2 class="section-title">History</h2>
       <div id="historyList"></div>
     </div>
   </div>
 
+  <!-- AD PLACEMENT #3 - Bottom -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4347664015203404"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
   <footer>
-    <button class="reset-link" id="resetBtn">Reset all progress</button>
-    <div style="text-align: center; margin-top: 30px; padding: 20px; border-top: 1px solid rgba(45, 212, 255, 0.2); font-size: 12px; color: #5b7088;">
-      <a href="about-contact.html" style="color: #2dd4ff; text-decoration: none; margin: 0 15px;">📖 About Us</a>
-      <span style="color: #2dd4ff;">|</span>
-      <a href="about-contact.html" style="color: #2dd4ff; text-decoration: none; margin: 0 15px;">📧 Contact Us</a>
-      <span style="color: #2dd4ff;">|</span>
-      <a href="https://ascend-level-up.vercel.app/" style="color: #2dd4ff; text-decoration: none; margin: 0 15px;">🏠 Home</a>
-      <p style="margin-top: 10px; color: #3d5a80;">© 2026 Ascend Level Up | Built with ❤️</p>
+    <div class="footer-links">
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/about.html">About & Contact</a>
     </div>
+    <button class="reset-link" id="resetBtn">Reset All Progress</button>
   </footer>
 
 </div>
 
 <script type="module">
-// ============ FIREBASE INITIALIZATION ============
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-// YOUR FIREBASE CONFIG - REPLACE WITH YOUR CONFIG
 const firebaseConfig = {
-  apiKey: "AIzaSyCNwC_JNHtp8R1XaTAkp_bPJ3sbqh-jfQ",
-  authDomain: "ascend-level-up.firebaseapp.com",
-  projectId: "ascend-level-up",
-  storageBucket: "ascend-level-up.firebasestorage.app",
-  messagingSenderId: "644326876476",
-  appId: "1:644326876476:web:a5c5ae5f6b8a05a896b8e0"
+  apiKey: "AIzaSyDjpLq6w0sJBd67MdyDT2LIoSL64q3kqXA",
+  authDomain: "ascend-levelup.firebaseapp.com",
+  projectId: "ascend-levelup",
+  storageBucket: "ascend-levelup.appspot.com",
+  messagingSenderId: "779627849838",
+  appId: "1:779627849838:web:ba3c7c78a2f07a7dd68159"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -230,172 +296,99 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 let currentUser = null;
-let unsubscribeSnapshot = null;
-let isFirebaseSyncing = false;
 
-// ============ STATE & RANK SYSTEM ============
-let state = {};
-const rankTable = [
-  {min:0, name:'E', color:'#94a3b8'},
-  {min:10, name:'D', color:'#60a5fa'},
-  {min:25, name:'C', color:'#34d399'},
-  {min:45, name:'B', color:'#fbbf24'},
-  {min:70, name:'A', color:'#f87171'},
-  {min:100, name:'S', color:'#a78bfa'},
+const rankSys = [
+  {level:1, name:'E', color:'#94a3b8'},
+  {level:10, name:'D', color:'#a78bfa'},
+  {level:20, name:'C', color:'#60a5fa'},
+  {level:30, name:'B', color:'#34d399'},
+  {level:40, name:'A', color:'#fbbf24'},
+  {level:50, name:'S', color:'#f87171'},
 ];
+
+function rankFor(lvl){
+  for(let i=rankSys.length-1; i>=0; i--){
+    if(lvl >= rankSys[i].level) return rankSys[i];
+  }
+  return rankSys[0];
+}
+
+function xpNeeded(lvl){ return 100 + (lvl - 1) * 50; }
 
 function defaultState(){
   return {
     name:'Hunter',
     level:1,
     xp:0,
-    stats:{STR:1, DEX:1, INT:1, VIT:1, WIS:1, LCK:1},
-    quests:[],
-    history:[],
-    streak:0,
-    lastDate:todayStr(),
+    stats:{Strength:1, Endurance:1, Agility:1},
     unallocated:0,
+    streak:0,
+    lastDate:new Date().toLocaleDateString('en-GB'),
+    quests:[],
     bonusGiven:false,
+    history:[]
   };
 }
 
-function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1).toString().padStart(2,'0')+'-'+d.getDate().toString().padStart(2,'0'); }
-function xpNeeded(lvl){ return Math.round(100*(1.05**lvl)); }
-function rankFor(lvl){ return rankTable.reduce((a,b)=>lvl>=b.min?b:a); }
+let state = defaultState();
 
-// ============ FIREBASE SYNC ============
-async function saveStateToFirebase(stateObj){
-  if(!currentUser || isFirebaseSyncing) return;
-  try{
-    isFirebaseSyncing = true;
-    const userDocRef = doc(db, 'hunters', currentUser.uid);
-    await setDoc(userDocRef, {
-      name: stateObj.name,
-      level: stateObj.level,
-      xp: stateObj.xp,
-      stats: stateObj.stats,
-      quests: stateObj.quests,
-      history: stateObj.history,
-      streak: stateObj.streak,
-      lastDate: stateObj.lastDate,
-      unallocated: stateObj.unallocated,
-      bonusGiven: stateObj.bonusGiven,
-      lastUpdated: new Date().toISOString(),
-    });
-    localStorage.setItem('hunterState', JSON.stringify(stateObj));
-  } catch(err){
-    console.error('Firebase save error:', err);
-  } finally{
-    isFirebaseSyncing = false;
+function saveState(s){
+  localStorage.setItem('hunterState', JSON.stringify(s));
+  if(currentUser){
+    setDoc(doc(db, 'users', currentUser.uid), {state:s}, {merge:true}).catch(e=>console.error('Firestore save error:', e));
   }
 }
 
-async function loadStateFromFirebase(userId){
-  try{
-    const userDocRef = doc(db, 'hunters', userId);
-    const docSnap = await getDoc(userDocRef);
-    if(docSnap.exists()){
-      return docSnap.data();
-    }
-  } catch(err){
-    console.error('Firebase load error:', err);
-  }
-  return null;
-}
-
-function setupFirebaseListener(userId){
-  if(unsubscribeSnapshot) unsubscribeSnapshot();
-  try{
-    const userDocRef = doc(db, 'hunters', userId);
-    unsubscribeSnapshot = onSnapshot(userDocRef, (doc)=>{
-      if(doc.exists()){
-        const fbData = doc.data();
-        // Only update if remote data is newer
-        if(fbData && fbData.lastUpdated > new Date(state.lastUpdated || 0).toISOString()){
-          state = {
-            name: fbData.name || state.name,
-            level: fbData.level || state.level,
-            xp: fbData.xp !== undefined ? fbData.xp : state.xp,
-            stats: fbData.stats || state.stats,
-            quests: fbData.quests || state.quests,
-            history: fbData.history || state.history,
-            streak: fbData.streak !== undefined ? fbData.streak : state.streak,
-            lastDate: fbData.lastDate || state.lastDate,
-            unallocated: fbData.unallocated !== undefined ? fbData.unallocated : state.unallocated,
-            bonusGiven: fbData.bonusGiven !== undefined ? fbData.bonusGiven : state.bonusGiven,
-            lastUpdated: fbData.lastUpdated || new Date().toISOString(),
-          };
-          render();
-          queueNotify('SYNC', 'Progress synced from another device.', 'normal');
-        }
-      }
-    });
-  } catch(err){
-    console.error('Firebase listener error:', err);
-  }
-}
-
-// ============ LOCAL STORAGE FALLBACK ============
 async function loadState(){
   if(currentUser){
-    const fbState = await loadStateFromFirebase(currentUser.uid);
-    if(fbState){
-      return fbState;
-    }
+    try{
+      const snap = await getDoc(doc(db, 'users', currentUser.uid));
+      if(snap.exists() && snap.data().state) return snap.data().state;
+    } catch(e){ console.error('Firestore load error:', e); }
   }
   const local = localStorage.getItem('hunterState');
   return local ? JSON.parse(local) : null;
 }
 
-function saveState(stateObj){
-  localStorage.setItem('hunterState', JSON.stringify(stateObj));
-  if(currentUser){
-    saveStateToFirebase(stateObj);
-  }
+function setupFirebaseListener(uid){
+  onSnapshot(doc(db, 'users', uid), (snap)=>{
+    if(snap.exists() && snap.data().state) state = snap.data().state;
+    render();
+  }, (e)=>console.error('Listener error:', e));
 }
 
-// ============ UI & GAME LOGIC ============
-let notifyBusy = false;
-function queueNotify(tag, msg, style='normal'){
-  if(notifyBusy) return;
-  notifyBusy = true;
-  const container = document.getElementById('notifyContainer');
-  const toast = document.createElement('div');
-  toast.className = 'toast '+style;
-  toast.innerHTML = '<div class="tag">'+escapeHtml(tag)+'</div><div class="msg">'+escapeHtml(msg)+'</div>';
-  container.appendChild(toast);
-  setTimeout(()=>toast.classList.add('show'), 10);
-  setTimeout(()=>{
-    toast.classList.remove('show');
-    setTimeout(()=>{ container.removeChild(toast); notifyBusy=false; }, 350);
-  }, 3000);
+function sleep(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+function queueNotify(tag, msg, kind){
+  const c = document.getElementById('notifyContainer');
+  const t = document.createElement('div');
+  t.className = 'toast '+kind;
+  t.innerHTML = '<div class="tag">'+tag+'</div><div class="msg">'+msg+'</div>';
+  c.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(), 350); }, 3000);
 }
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
 function applyDailyReset(){
-  const today = todayStr();
-  if(state.lastDate === today) return;
-  const hadQuests = state.quests.length>0;
-  const allDone = hadQuests && state.quests.every(q=>q.done);
-  const doneCount = state.quests.filter(q=>q.done).length;
-  if(hadQuests){
-    state.history.unshift({date:state.lastDate, completed:allDone, count:doneCount, total:state.quests.length});
-    state.history = state.history.slice(0,14);
-    state.streak = allDone ? state.streak+1 : 0;
+  const now = new Date().toLocaleDateString('en-GB');
+  if(state.lastDate !== now){
+    state.lastDate = now;
+    state.streak = 0;
+    state.bonusGiven = false;
+    state.quests = [];
+    saveState(state);
   }
-  state.quests.forEach(q=>q.done=false);
-  state.bonusGiven = false;
-  state.lastDate = today;
 }
 
-function addXP(amount){
-  state.xp += amount;
-  let leveled=false;
+function addXP(amt){
+  state.xp += amt;
+  const needed = xpNeeded(state.level);
+  let leveled = false;
   const prevRank = rankFor(state.level).name;
-  while(state.xp >= xpNeeded(state.level)){
-    state.xp -= xpNeeded(state.level);
+  while(state.xp >= needed){
+    state.xp -= needed;
     state.level += 1;
-    state.unallocated += 3;
+    state.unallocated += 1;
     leveled = true;
   }
   const newRank = rankFor(state.level).name;
