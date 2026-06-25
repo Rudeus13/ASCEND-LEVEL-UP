@@ -581,6 +581,7 @@ function checkIfCodeClaimed() {
 // Apply referrer code
 document.getElementById('applyCodeBtn').addEventListener('click', function() {
   const code = document.getElementById('referrerCodeInput').value.trim().toUpperCase();
+  const userOwnCode = generateReferralCode(); // Get user's own code
   
   if (!code) {
     alert('Please enter a referral code!');
@@ -589,6 +590,12 @@ document.getElementById('applyCodeBtn').addEventListener('click', function() {
 
   if (!code.startsWith('HUNTER_')) {
     alert('Invalid code format! Should start with HUNTER_');
+    return;
+  }
+
+  // CHECK: User cannot use their own code!
+  if (code === userOwnCode) {
+    alert('❌ You cannot use your own referral code!');
     return;
   }
 
