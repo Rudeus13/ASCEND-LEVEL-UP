@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referral Program — Ascend Level Up</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+  color: #d6ecff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container { max-width: 500px; margin: 0 auto; }
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 2px solid #2dd4ff;
+}
+
+h1 {
+  font-size: 28px;
+  color: #2dd4ff;
+  text-shadow: 0 0 10px rgba(45, 212, 255, 0.5);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #5b7088;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: rgba(45, 212, 255, 0.1);
+  border: 1px solid rgba(45, 212, 255, 0.3);
+  color: #2dd4ff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.back-link:hover {
+  background: rgba(45, 212, 255, 0.2);
+}
+
+.frame {
+  background: rgba(12, 20, 36, 0.9);
+  border: 2px solid #2dd4ff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.frame.reward-highlight {
+  border-color: #ff4d4d;
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+}
+
+h2 {
+  color: #fbbf24;
+  font-size: 16px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.code-section {
+  background: rgba(45, 212, 255, 0.05);
+  border-left: 3px solid #2dd4ff;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.code-label {
+  color: #5b7088;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.referral-code {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.code-display {
+  background: var(--bg, #060912);
+  border: 1px solid #2dd4ff;
+  padding: 12px;
+  border-radius: 4px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2dd4ff;
+  flex: 1;
+  text-align: center;
+}
+
+.copy-btn {
+  background: #2dd4ff;
+  border: none;
+  color: #060912;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: #7ee8ff;
+  box-shadow: 0 0 12px rgba(45, 212, 255, 0.4);
+}
+
+.reward-box {
+  background: rgba(255, 77, 77, 0.1);
+  border: 2px solid #ff4d4d;
+  padding: 14px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.reward-title {
+  color: #ff4d4d;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reward-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 77, 77, 0.2);
+  font-size: 13px;
+}
+
+.reward-item:last-child {
+  border-bottom: none;
+}
+
+.reward-value {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.stats-table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+
+.stats-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(45, 212, 255, 0.1);
+  font-size: 13px;
+}
+
+.stats-table tr:last-child td {
+  border-bottom: none;
+}
+
+.label-col {
+  color: #5b7088;
+  width: 40%;
+}
+
+.value-col {
+  color: #2dd4ff;
+  font-weight: 700;
+  text-align: right;
+}
+
+.referral-count {
+  text-align: center;
+  padding: 16px;
+  background: rgba(45, 212, 255, 0.05);
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.count-number {
+  font-size: 32px;
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.count-label {
+  color: #5b7088;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.aura-status {
+  text-align: center;
+  padding: 14px;
+  background: rgba(255, 77, 77, 0.1);
+  border: 1px solid #ff4d4d;
+  border-radius: 4px;
+  margin: 16px 0;
+}
+
+.aura-active {
+  color: #ff4d4d;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.aura-timer {
+  color: #fbbf24;
+  font-size: 12px;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.share-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.share-btn {
+  padding: 10px;
+  border: 1px solid #2dd4ff;
+  background: transparent;
+  color: #2dd4ff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.share-btn:hover {
+  background: rgba(45, 212, 255, 0.2);
+}
+
+.info-box {
+  background: rgba(45, 212, 255, 0.05);
+  border-left: 3px solid #2dd4ff;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 16px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(45, 212, 255, 0.2);
+  font-size: 11px;
+  color: #5b7088;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 22px; }
+  .share-buttons { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🔗 REFERRAL PROGRAM</h1>
+    <p class="subtitle">Share your code, earn FREE Red Aura + rewards</p>
+    <a href="/" class="back-link">← Back to App</a>
+  </header>
+
+  <!-- YOUR CODE SECTION -->
+  <div class="frame">
+    <h2>Your Referral Code</h2>
+    <div class="code-section">
+      <div class="code-label">Share this code with friends:</div>
+      <div class="referral-code">
+        <div class="code-display" id="referralCode">HUNTER_LOADING</div>
+        <button class="copy-btn" id="copyBtn">Copy</button>
+      </div>
+    </div>
+
+    <div class="referral-count">
+      <div class="count-number" id="referralCount">0</div>
+      <div class="count-label">Users Referred</div>
+    </div>
+
+    <div id="auraStatusDiv"></div>
+  </div>
+
+  <!-- WHAT YOU EARN -->
+  <div class="frame reward-highlight">
+    <h2>🔴 What You Earn Per Referral</h2>
+    <div class="reward-box">
+      <div class="reward-title">🔴 RED AURA (1 Month FREE)</div>
+      <div class="reward-item">
+        <span>Aura Duration:</span>
+        <span class="reward-value">30 days</span>
+      </div>
+      <div class="reward-item">
+        <span>Auto-Renews:</span>
+        <span class="reward-value">Per referral</span>
+      </div>
+    </div>
+    
+    <table class="stats-table">
+      <tr>
+        <td class="label-col">XP Reward:</td>
+        <td class="value-col">+2000 XP</td>
+      </tr>
+      <tr>
+        <td class="label-col">Stat Points:</td>
+        <td class="value-col">+10 points</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- WHAT FRIENDS GET -->
+  <div class="frame">
+    <h2>🎁 What Friends Get</h2>
+    <table class="stats-table">
+      <tr>
+        <td class="label-col">XP Bonus:</td>
+        <td class="value-col">+1000 XP</td>
+      </tr>
+      <tr>
+        <td class="label-col">Stat Points:</td>
+        <td class="value-col">+6 points</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SHARE SECTION -->
+  <div class="frame">
+    <h2>📱 Share Your Code</h2>
+    <div class="share-buttons">
+      <button class="share-btn" id="shareInstagram">Instagram</button>
+      <button class="share-btn" id="shareWhatsapp">WhatsApp</button>
+      <button class="share-btn" id="shareTwitter">Twitter</button>
+      <button class="share-btn" id="shareGeneral">More</button>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="info-box">
+    <strong>How it works:</strong><br>
+    1. Share your code with friends<br>
+    2. Friend joins app with your code<br>
+    3. You get RED AURA + 2000 XP + 10 points<br>
+    4. Aura expires in 30 days (earn again by referring more!)
+  </div>
+
+  <footer>
+    <p>Ascend Level Up • Referral System</p>
+    <p style="margin-top: 8px;">Build your hunter army! 🚀</p>
+  </footer>
+</div>
+
+<script>
+// Generate unique referral code from localStorage user ID
+function generateReferralCode() {
+  let userId = localStorage.getItem('hunterUserId');
+  if (!userId) {
+    userId = 'HUNTER_' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    localStorage.setItem('hunterUserId', userId);
+  }
+  return userId;
+}
+
+// Load referral data
+function loadReferralData() {
+  const code = generateReferralCode();
+  document.getElementById('referralCode').textContent = code;
+
+  const referralCount = localStorage.getItem('referralCount') || '0';
+  document.getElementById('referralCount').textContent = referralCount;
+
+  // Check aura status
+  const auraExpiry = localStorage.getItem('auraExpiry');
+  const auraStatusDiv = document.getElementById('auraStatusDiv');
+  
+  if (auraExpiry) {
+    const expiry = new Date(auraExpiry);
+    const now = new Date();
+    const daysLeft = Math.ceil((expiry - now) / (1000 * 60 * 60 * 24));
+    
+    if (daysLeft > 0) {
+      auraStatusDiv.innerHTML = `
+        <div class="aura-status">
+          <div class="aura-active">🔴 RED AURA ACTIVE</div>
+          <div class="aura-timer">Expires in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}</div>
+        </div>
+      `;
+    } else {
+      auraStatusDiv.innerHTML = `
+        <div class="aura-status" style="border-color: #5b7088; background: rgba(91, 112, 136, 0.1);">
+          <div style="color: #5b7088;">⏳ Aura expired</div>
+          <div class="aura-timer">Refer more users to earn it again!</div>
+        </div>
+      `;
+    }
+  } else {
+    auraStatusDiv.innerHTML = `
+      <div class="aura-status" style="border-color: #5b7088; background: rgba(91, 112, 136, 0.1);">
+        <div style="color: #5b7088;">No active aura</div>
+        <div class="aura-timer">Refer your first friend to earn RED AURA!</div>
+      </div>
+    `;
+  }
+}
+
+// Copy code to clipboard
+document.getElementById('copyBtn').addEventListener('click', function() {
+  const code = document.getElementById('referralCode').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = this;
+    const oldText = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = oldText; }, 2000);
+  });
+});
+
+// Share buttons
+document.getElementById('shareInstagram').addEventListener('click', function() {
+  const code = document.getElementById('referralCode').textContent;
+  const text = `Join me on Ascend Level Up! Use code ${code} to get 1000 XP + 6 stat points! 🎮🚀`;
+  alert('Copy this text and share on Instagram:\n\n' + text);
+});
+
+document.getElementById('shareWhatsapp').addEventListener('click', function() {
+  const code = document.getElementById('referralCode').textContent;
+  const text = `Join me on Ascend Level Up! Use code ${code} to get 1000 XP + 6 stat points! 🎮🚀`;
+  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+});
+
+document.getElementById('shareTwitter').addEventListener('click', function() {
+  const code = document.getElementById('referralCode').textContent;
+  const text = `Leveling up with Ascend Level Up! Use my code ${code} to get bonuses 🎮 #IndieGame`;
+  const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+});
+
+document.getElementById('shareGeneral').addEventListener('click', function() {
+  const code = document.getElementById('referralCode').textContent;
+  const text = `Join me on Ascend Level Up! Use code ${code} to get 1000 XP + 6 stat points!`;
+  if (navigator.share) {
+    navigator.share({
+      title: 'Ascend Level Up',
+      text: text
+    });
+  } else {
+    alert('Copy and share:\n' + text);
+  }
+});
+
+// Load on page open
+loadReferralData();
+</script>
+
+</body>
+</html>
