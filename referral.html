@@ -370,8 +370,53 @@ footer {
     </table>
   </div>
 
-  <!-- SHARE SECTION -->
-  <div class="frame">
+  <!-- NEW USER - ENTER REFERRER CODE -->
+  <div class="frame" style="border-color: #7ee8ff; background: rgba(12, 20, 36, 0.95);">
+    <h2 style="color: #7ee8ff;">🎁 Got a Referral Code?</h2>
+    <p style="color: #5b7088; font-size: 13px; margin-bottom: 12px;">Enter your friend's code to get bonus XP & stat points!</p>
+    
+    <div id="codeInputSection">
+      <div class="code-section" style="border-left-color: #7ee8ff; background: rgba(126, 232, 255, 0.05);">
+        <div class="code-label">Your Friend's Referral Code:</div>
+        <div style="display: flex; gap: 8px; margin-top: 8px;">
+          <input type="text" id="referrerCodeInput" placeholder="e.g. HUNTER_RK86VL4DR" style="
+            background: var(--bg, #060912);
+            border: 1px solid #7ee8ff;
+            padding: 10px;
+            border-radius: 4px;
+            color: #d6ecff;
+            font-family: 'Share Tech Mono', monospace;
+            flex: 1;
+            font-size: 13px;
+          " />
+          <button id="applyCodeBtn" style="
+            background: #7ee8ff;
+            border: none;
+            color: #060912;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+          ">Apply</button>
+        </div>
+      </div>
+      
+      <div style="background: rgba(126, 232, 255, 0.1); border-left: 3px solid #7ee8ff; padding: 10px; border-radius: 4px; margin-top: 12px; font-size: 12px; color: #d6ecff;">
+        🎯 <strong>You'll get:</strong> +1000 XP + 6 stat points
+      </div>
+    </div>
+
+    <div id="codeAppliedSection" style="display: none;">
+      <div style="text-align: center; padding: 20px; background: rgba(74, 222, 128, 0.1); border: 2px solid #4ade80; border-radius: 6px;">
+        <div style="font-size: 28px; margin-bottom: 8px;">✅</div>
+        <div style="color: #4ade80; font-weight: 700; margin-bottom: 8px;">Code Applied!</div>
+        <div style="color: #d6ecff; font-size: 13px;">You earned: <span style="color: #fbbf24; font-weight: 700;">+1000 XP</span> + <span style="color: #fbbf24; font-weight: 700;">6 Stat Points</span></div>
+        <div style="color: #5b7088; font-size: 11px; margin-top: 8px;">Go back to app to see your bonus!</div>
+      </div>
+    </div>
+  </div>
     <h2>📱 Share Your Code</h2>
     <div class="share-buttons">
       <button class="share-btn" id="shareInstagram">Instagram</button>
@@ -523,6 +568,59 @@ document.getElementById('shareGeneral').addEventListener('click', function() {
 
 // Load on page open
 loadReferralData();
+
+// Check if code already claimed
+function checkIfCodeClaimed() {
+  const claimed = localStorage.getItem('referralCodeClaimed');
+  if (claimed) {
+    document.getElementById('codeInputSection').style.display = 'none';
+    document.getElementById('codeAppliedSection').style.display = 'block';
+  }
+}
+
+// Apply referrer code
+document.getElementById('applyCodeBtn').addEventListener('click', function() {
+  const code = document.getElementById('referrerCodeInput').value.trim().toUpperCase();
+  
+  if (!code) {
+    alert('Please enter a referral code!');
+    return;
+  }
+
+  if (!code.startsWith('HUNTER_')) {
+    alert('Invalid code format! Should start with HUNTER_');
+    return;
+  }
+
+  // Check if already claimed
+  if (localStorage.getItem('referralCodeClaimed')) {
+    alert('You already claimed a referral code!');
+    return;
+  }
+
+  // Store the referrer code and bonus
+  localStorage.setItem('referrerCode', code);
+  localStorage.setItem('referralCodeClaimed', 'true');
+  localStorage.setItem('referralBonus', JSON.stringify({
+    xp: 1000,
+    statPoints: 6
+  }));
+
+  console.log('✨ Referral code applied:', code);
+  console.log('🎁 Bonus: 1000 XP + 6 stat points');
+
+  // Show success state
+  document.getElementById('codeInputSection').style.display = 'none';
+  document.getElementById('codeAppliedSection').style.display = 'block';
+
+  // Show success message
+  setTimeout(() => {
+    alert('✅ Code applied! Go back to the app to see your bonus!');
+  }, 500);
+});
+
+// Check on page load
+checkIfCodeClaimed();
 </script>
 
 </body>
