@@ -396,6 +396,22 @@ function addXP(amt){
   if(newRank !== prevRank) queueNotify('RANK UP', 'Your rank has risen to '+newRank+'-Rank.', 'rankup');
 }
 
+function applyReferralBonus(){
+  const bonusData = localStorage.getItem('referralBonus');
+  if(!bonusData) return;
+  try {
+    const bonus = JSON.parse(bonusData);
+    console.log('🎁 Applying referral bonus:', bonus);
+    if(bonus.xp) addXP(bonus.xp);
+    if(bonus.statPoints) state.unallocated += bonus.statPoints;
+    queueNotify('REFERRAL BONUS', `+${bonus.xp} XP + ${bonus.statPoints} stat points!`, 'normal');
+    localStorage.removeItem('referralBonus');
+    persistAndRender();
+  } catch(err) {
+    console.error('Error applying referral bonus:', err);
+  }
+}
+
 function toggleQuest(id){
   const q = state.quests.find(x=>x.id===id);
   if(!q || q.done) return;
@@ -519,12 +535,14 @@ document.addEventListener('click', (e)=>{
       state = loaded || defaultState();
       if(state.bonusGiven===undefined) state.bonusGiven=false;
       applyDailyReset();
+      applyReferralBonus();
       setupFirebaseListener(user.uid);
     } else {
       const loaded = await loadState();
       state = loaded || defaultState();
       if(state.bonusGiven===undefined) state.bonusGiven=false;
       applyDailyReset();
+      applyReferralBonus();
     }
     
     render();
