@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Quests — Ascend Level Up</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+  color: #d6ecff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container { max-width: 520px; margin: 0 auto; }
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 2px solid #fbbf24;
+}
+
+h1 {
+  font-size: 28px;
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #5b7088;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.back-link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: #fbbf24;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.frame {
+  background: rgba(12, 20, 36, 0.9);
+  border: 2px solid #fbbf24;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.2);
+}
+
+h2 {
+  color: #fbbf24;
+  font-size: 16px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.quest-card {
+  background: rgba(251, 191, 36, 0.05);
+  border-left: 3px solid #fbbf24;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+
+.quest-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #d6ecff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quest-description {
+  font-size: 12px;
+  color: #5b7088;
+  margin-bottom: 8px;
+}
+
+.quest-rewards {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+
+.reward-item {
+  background: rgba(74, 222, 128, 0.1);
+  border-left: 2px solid #4ade80;
+  padding: 6px 10px;
+  border-radius: 3px;
+  color: #d6ecff;
+}
+
+.reward-label {
+  color: #5b7088;
+  font-size: 10px;
+}
+
+.reward-value {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.progress-bar {
+  background: #03050a;
+  height: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 8px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.progress-fill {
+  background: linear-gradient(90deg, #fbbf24, #ff8c00);
+  height: 100%;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+.progress-text {
+  font-size: 11px;
+  color: #5b7088;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.badge-display {
+  text-align: center;
+  padding: 16px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 2px dashed #fbbf24;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.badge-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.badge-name {
+  color: #fbbf24;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.badge-effect {
+  font-size: 12px;
+  color: #d6ecff;
+  background: rgba(74, 222, 128, 0.15);
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 8px;
+}
+
+.weekly-reset {
+  background: rgba(126, 232, 255, 0.1);
+  border-left: 3px solid #2dd4ff;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #d6ecff;
+  margin-bottom: 16px;
+}
+
+.reset-timer {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(251, 191, 36, 0.2);
+  font-size: 11px;
+  color: #5b7088;
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🏆 WEEKLY QUESTS</h1>
+    <p class="subtitle">Complete challenges to earn rare badges & rewards</p>
+    <a href="/" class="back-link">← Back to App</a>
+  </header>
+
+  <!-- Rare Badge Showcase -->
+  <div class="frame">
+    <h2>🌟 Rare Badge</h2>
+    <div class="badge-display">
+      <div class="badge-icon">⚡</div>
+      <div class="badge-name">XP Boost</div>
+      <div style="font-size: 11px; color: #5b7088; margin-bottom: 8px;">Complete all weekly quests</div>
+      <div class="badge-effect">
+        <strong>Effect:</strong> +50% XP boost<br>
+        <strong>Duration:</strong> 6 days<br>
+        <strong>Stacks:</strong> Complete again to renew!
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly Reset Info -->
+  <div class="weekly-reset">
+    ⏱️ Resets every <span class="reset-timer">Monday</span> at 12:00 AM
+  </div>
+
+  <!-- Weekly Challenges -->
+  <div class="frame">
+    <h2>Weekly Challenges</h2>
+
+    <!-- Quest 1 -->
+    <div class="quest-card">
+      <div class="quest-title">📋 Complete 10 Daily Quests</div>
+      <div class="quest-description">Finish any 10 daily workout quests this week</div>
+      <div class="quest-rewards">
+        <div class="reward-item">
+          <div class="reward-label">XP</div>
+          <div class="reward-value">+500 XP</div>
+        </div>
+        <div class="reward-item">
+          <div class="reward-label">Stats</div>
+          <div class="reward-value">+5 points</div>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="quest1Progress" style="width: 0%"></div>
+      </div>
+      <div class="progress-text"><span id="quest1Count">0</span> / 10</div>
+    </div>
+
+    <!-- Quest 2 -->
+    <div class="quest-card">
+      <div class="quest-title">💪 Complete 100 Total XP</div>
+      <div class="quest-description">Earn 100 XP from any quests this week</div>
+      <div class="quest-rewards">
+        <div class="reward-item">
+          <div class="reward-label">XP</div>
+          <div class="reward-value">+300 XP</div>
+        </div>
+        <div class="reward-item">
+          <div class="reward-label">Stats</div>
+          <div class="reward-value">+3 points</div>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="quest2Progress" style="width: 0%"></div>
+      </div>
+      <div class="progress-text"><span id="quest2Count">0</span> / 100 XP</div>
+    </div>
+
+    <!-- Quest 3 -->
+    <div class="quest-card">
+      <div class="quest-title">🔥 Maintain 7-Day Streak</div>
+      <div class="quest-description">Complete at least 1 quest every day for 7 days</div>
+      <div class="quest-rewards">
+        <div class="reward-item">
+          <div class="reward-label">XP</div>
+          <div class="reward-value">+1000 XP</div>
+        </div>
+        <div class="reward-item">
+          <div class="reward-label">Stats</div>
+          <div class="reward-value">+10 points</div>
+        </div>
+        <div class="reward-item">
+          <div class="reward-label">Badge</div>
+          <div class="reward-value">⚡ XP Boost</div>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="quest3Progress" style="width: 0%"></div>
+      </div>
+      <div class="progress-text"><span id="quest3Count">0</span> / 7 days</div>
+    </div>
+
+    <!-- Quest 4 -->
+    <div class="quest-card">
+      <div class="quest-title">⭐ Complete All Daily Quests 5 Days</div>
+      <div class="quest-description">Finish all 4 daily quests in one day, 5 times this week</div>
+      <div class="quest-rewards">
+        <div class="reward-item">
+          <div class="reward-label">XP</div>
+          <div class="reward-value">+700 XP</div>
+        </div>
+        <div class="reward-item">
+          <div class="reward-label">Stats</div>
+          <div class="reward-value">+7 points</div>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="quest4Progress" style="width: 0%"></div>
+      </div>
+      <div class="progress-text"><span id="quest4Count">0</span> / 5 days</div>
+    </div>
+  </div>
+
+  <!-- Completed Badges -->
+  <div class="frame">
+    <h2>🏅 Your Badges</h2>
+    <div id="badgesList" style="text-align: center; padding: 20px; color: #5b7088; font-size: 13px;">
+      Complete weekly quests to earn badges!
+    </div>
+  </div>
+
+  <footer>
+    <p>Ascend Level Up • Weekly Quest System</p>
+    <p style="margin-top: 8px;">Earn rare badges and boost your progression! 🚀</p>
+  </footer>
+</div>
+
+<script>
+// Load weekly quest progress
+function loadWeeklyProgress(){
+  const weeklyData = JSON.parse(localStorage.getItem('weeklyQuestData') || '{}');
+  
+  // Get current week number
+  const today = new Date();
+  const weekNum = Math.ceil((today.getDate() - today.getDay() + 7) / 7);
+  const year = today.getFullYear();
+  const currentWeek = `${year}-W${weekNum}`;
+  
+  // Reset if new week
+  if(weeklyData.week !== currentWeek){
+    weeklyData.week = currentWeek;
+    weeklyData.dailyQuestsCompleted = 0;
+    weeklyData.totalXpEarned = 0;
+    weeklyData.streak = 0;
+    weeklyData.fullDaysCompleted = 0;
+    weeklyData.badges = [];
+  }
+  
+  // Update progress bars
+  document.getElementById('quest1Count').textContent = Math.min(weeklyData.dailyQuestsCompleted, 10);
+  document.getElementById('quest1Progress').style.width = Math.min((weeklyData.dailyQuestsCompleted / 10) * 100, 100) + '%';
+  
+  document.getElementById('quest2Count').textContent = Math.min(weeklyData.totalXpEarned, 100);
+  document.getElementById('quest2Progress').style.width = Math.min((weeklyData.totalXpEarned / 100) * 100, 100) + '%';
+  
+  document.getElementById('quest3Count').textContent = weeklyData.streak;
+  document.getElementById('quest3Progress').style.width = Math.min((weeklyData.streak / 7) * 100, 100) + '%';
+  
+  document.getElementById('quest4Count').textContent = weeklyData.fullDaysCompleted;
+  document.getElementById('quest4Progress').style.width = Math.min((weeklyData.fullDaysCompleted / 5) * 100, 100) + '%';
+  
+  // Show badges
+  const badgesList = document.getElementById('badgesList');
+  if(weeklyData.badges && weeklyData.badges.length > 0){
+    badgesList.innerHTML = '<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">';
+    weeklyData.badges.forEach(badge => {
+      if(badge === 'xpBoost'){
+        badgesList.innerHTML += '<div style="text-align: center;"><div style="font-size: 32px;">⚡</div><div style="color: #fbbf24; font-size: 11px; font-weight: 700;">XP Boost</div></div>';
+      }
+    });
+    badgesList.innerHTML += '</div>';
+  }
+}
+
+loadWeeklyProgress();
+</script>
+
+</body>
+</html>
