@@ -420,14 +420,73 @@ function toggleQuest(id){
   q.done = true;
   addXP(q.xp);
   queueNotify('QUEST CLEAR', '"'+q.name+'" complete. +'+q.xp+' XP', 'normal');
+  
+  // UPDATE WEEKLY QUEST PROGRESS
+  updateWeeklyQuestProgress(q.name, q.xp);
+  
   const allDone = state.quests.length>0 && state.quests.every(x=>x.done);
   if(allDone && !state.bonusGiven){
     state.bonusGiven = true;
     state.unallocated += 1;
     addXP(20);
     queueNotify('SYSTEM', 'Daily Quest Complete! Bonus +20 XP, +1 stat point.', 'normal');
+    
+    // WEEKLY QUEST: Check if all daily quests completed today
+    updateWeeklyAllQuestsDone();
   }
   persistAndRender();
+}
+
+function updateWeeklyQuestProgress(questName, questXp){
+  let weeklyData = JSON.parse(localStorage.getItem('weeklyQuestData') || '{}');
+  
+  // Get current week
+  const today = new Date();
+  const weekNum = Math.ceil((today.getDate() - today.getDay() + 7) / 7);
+  const year = today.getFullYear();
+  const currentWeek = `${year}-W${weekNum}`;
+  
+  // Reset if new week
+  if(weeklyData.week !== currentWeek){
+    weeklyData.week = currentWeek;
+    weeklyData.dailyQuestsCompleted = 0;
+    weeklyData.totalXpEarned = 0;
+    weeklyData.streak = 0;
+    weeklyData.fullDaysCompleted = 0;
+    weeklyData.badges = [];
+  }
+  
+  // Update progress
+  weeklyData.dailyQuestsCompleted = (weeklyData.dailyQuestsCompleted || 0) + 1;
+  weeklyData.totalXpEarned = (weeklyData.totalXpEarned || 0) + questXp;
+  weeklyData.streak = Math.max(weeklyData.streak || 0, state.streak);
+  
+  localStorage.setItem('weeklyQuestData', JSON.stringify(weeklyData));
+  console.log('📊 Weekly quest progress updated');
+}
+
+function updateWeeklyAllQuestsDone(){
+  let weeklyData = JSON.parse(localStorage.getItem('weeklyQuestData') || '{}');
+  
+  const today = new Date();
+  const weekNum = Math.ceil((today.getDate() - today.getDay() + 7) / 7);
+  const year = today.getFullYear();
+  const currentWeek = `${year}-W${weekNum}`;
+  
+  if(weeklyData.week !== currentWeek){
+    weeklyData.week = currentWeek;
+    weeklyData.fullDaysCompleted = 0;
+  }
+  
+  // Track if today's all quests were done (once per day)
+  const today2 = new Date().toLocaleDateString();
+  if(weeklyData.lastFullDay !== today2){
+    weeklyData.fullDaysCompleted = (weeklyData.fullDaysCompleted || 0) + 1;
+    weeklyData.lastFullDay = today2;
+  }
+  
+  localStorage.setItem('weeklyQuestData', JSON.stringify(weeklyData));
+  console.log('✅ Full day completed for weekly quest');
 }
 
 function allocateStat(key){

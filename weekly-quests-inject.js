@@ -14,31 +14,37 @@
     const referralLink = document.querySelector('a[href="/referral.html"]');
     if (!referralLink) return;
 
-    // Create weekly quests link
+    // Create weekly quests link as button (matching leaderboard style)
     const weeklyLink = document.createElement('a');
     weeklyLink.href = '/weekly-quests.html';
     weeklyLink.style.cssText = `
-      color: #fbbf24;
-      text-decoration: none;
-      font-size: 13px;
-      margin-left: 16px;
-      transition: all 0.3s ease;
       display: inline-block;
-      padding: 4px 8px;
-      border-radius: 4px;
-      border: 1px solid transparent;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #fbbf24, #ff8c00);
+      color: #060912;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      border: 2px solid #fbbf24;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
     `;
     weeklyLink.textContent = '🏆 Weekly';
     
     // Hover effect
     weeklyLink.addEventListener('mouseenter', function() {
-      this.style.borderColor = '#fbbf24';
-      this.style.background = 'rgba(251, 191, 36, 0.1)';
+      this.style.boxShadow = '0 0 20px rgba(251, 191, 36, 0.5)';
+      this.style.transform = 'scale(1.05)';
     });
     
     weeklyLink.addEventListener('mouseleave', function() {
-      this.style.borderColor = 'transparent';
-      this.style.background = 'transparent';
+      this.style.boxShadow = '0 0 12px rgba(251, 191, 36, 0.3)';
+      this.style.transform = 'scale(1)';
     });
 
     // Insert after referral link

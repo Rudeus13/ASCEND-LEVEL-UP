@@ -10,35 +10,41 @@
     const wrap = document.querySelector('.wrap');
     if (!wrap) return;
 
-    // Find the leaderboard link
+    // Find the leaderboard link to add button after it
     const leaderboardLink = document.querySelector('a[href="/leaderboard.html"]');
     if (!leaderboardLink) return;
 
-    // Create referral link
+    // Create referral link as button (matching leaderboard style)
     const referralLink = document.createElement('a');
     referralLink.href = '/referral.html';
     referralLink.style.cssText = `
-      color: #ff4d4d;
-      text-decoration: none;
-      font-size: 13px;
-      margin-left: 16px;
-      transition: all 0.3s ease;
       display: inline-block;
-      padding: 4px 8px;
-      border-radius: 4px;
-      border: 1px solid transparent;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+      color: #060912;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      border: 2px solid #ff4d4d;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 0 12px rgba(255, 77, 77, 0.3);
     `;
     referralLink.textContent = '🔗 Referral';
     
     // Hover effect
     referralLink.addEventListener('mouseenter', function() {
-      this.style.borderColor = '#ff4d4d';
-      this.style.background = 'rgba(255, 77, 77, 0.1)';
+      this.style.boxShadow = '0 0 20px rgba(255, 77, 77, 0.5)';
+      this.style.transform = 'scale(1.05)';
     });
     
     referralLink.addEventListener('mouseleave', function() {
-      this.style.borderColor = 'transparent';
-      this.style.background = 'transparent';
+      this.style.boxShadow = '0 0 12px rgba(255, 77, 77, 0.3)';
+      this.style.transform = 'scale(1)';
     });
 
     // Insert after leaderboard link
