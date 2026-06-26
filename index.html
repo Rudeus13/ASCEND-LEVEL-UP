@@ -227,9 +227,21 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
   <div class="frame">
     <div class="frame-inner">
       <h2 class="section-title">Daily Quests</h2>
+      
+      <!-- Built-in Fitness Quests -->
+      <div style="margin-bottom: 14px;">
+        <div style="color: #5b7088; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Quick Add Workouts:</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('10 Push-ups', 20)">💪 Push-ups</button>
+          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('10 Sit-ups', 10)">🤸 Sit-ups</button>
+          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('10 Squats', 20)">🏋️ Squats</button>
+          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('100m Sprint', 60)">🏃 Sprint</button>
+        </div>
+      </div>
+
       <div id="questList"></div>
       <div class="add-quest">
-        <input type="text" id="newQuestName" placeholder="New quest...">
+        <input type="text" id="newQuestName" placeholder="Custom quest...">
         <input type="number" id="newQuestXp" class="xp-input" value="15" min="1" max="200">
         <button class="btn" id="addQuestBtn">Add</button>
       </div>
@@ -445,6 +457,12 @@ function addQuest(){
   nameInput.value=''; xpInput.value='15';
   persistAndRender();
 }
+
+function addBuiltinQuest(name, xp){
+  state.quests.push({id:'q'+Date.now(), name, xp, done:false});
+  persistAndRender();
+}
+
 function deleteQuest(id){ state.quests = state.quests.filter(q=>q.id!==id); persistAndRender(); }
 function resetAll(){
   if(!confirm('This will erase all your progress. Continue?')) return;
