@@ -228,18 +228,8 @@ h2.section-title::before{ content:''; width:6px; height:6px; background:var(--gl
     <div class="frame-inner">
       <h2 class="section-title">Daily Quests</h2>
       
-      <!-- Built-in Fitness Quests -->
-      <div style="margin-bottom: 14px;">
-        <div style="color: #5b7088; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Quick Add Workouts:</div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('10 Push-ups', 20)">💪 Push-ups</button>
-          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('10 Sit-ups', 10)">🤸 Sit-ups</button>
-          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('10 Squats', 20)">🏋️ Squats</button>
-          <button class="btn" style="background: #4ade80; padding: 8px 10px; font-size: 12px; cursor:pointer;" onclick="addBuiltinQuest('100m Sprint', 60)">🏃 Sprint</button>
-        </div>
-      </div>
-
       <div id="questList"></div>
+      
       <div class="add-quest">
         <input type="text" id="newQuestName" placeholder="Custom quest...">
         <input type="number" id="newQuestXp" class="xp-input" value="15" min="1" max="200">
@@ -500,7 +490,30 @@ function render(){
 
   const ql = document.getElementById('questList');
   ql.innerHTML = '';
-  if(state.quests.length===0){ ql.innerHTML = '<div class="empty-state">No quests yet. Add one below.</div>'; }
+  
+  // Add built-in workout quests
+  const builtinQuests = [
+    {name: '10 Push-ups', xp: 20, emoji: '💪'},
+    {name: '10 Sit-ups', xp: 10, emoji: '🤸'},
+    {name: '10 Squats', xp: 20, emoji: '🏋️'},
+    {name: '100m Sprint', xp: 60, emoji: '🏃'}
+  ];
+  
+  builtinQuests.forEach(bq => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.style.cssText = 'background:#4ade80; padding:8px 12px; font-size:13px; margin-bottom:6px; width:100%; cursor:pointer;';
+    btn.textContent = bq.emoji + ' ' + bq.name + ' +' + bq.xp + 'xp';
+    btn.onclick = function() { addBuiltinQuest(bq.name, bq.xp); };
+    ql.appendChild(btn);
+  });
+  
+  if(state.quests.length===0){ 
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.textContent = 'No quests yet. Choose from above or add custom.';
+    ql.appendChild(empty);
+  }
   state.quests.forEach(q=>{
     const row = document.createElement('div');
     row.className = 'quest-row';
