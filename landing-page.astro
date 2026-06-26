@@ -1,0 +1,836 @@
+---
+// src/pages/index.astro
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ascend Quest - Best Workout Quest Gamified Gym App | Solo Leveling Fitness</title>
+  <meta name="description" content="Ascend Quest: The best workout quest gamified gym app inspired by Solo Leveling. Daily workout quests with VR fitness compatibility. Level up like Sung Jin Woo. Free fitness tracker app.">
+  <meta name="keywords" content="gamified fitness, fitness app, workout app, RPG fitness, level up workouts">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ascend Quest - Level Up Your Fitness">
+  <meta property="og:description" content="Gamified workout app. Complete quests, earn XP, compete on leaderboards.">
+  <meta property="og:image" content="https://ascendquest.com/og-image.png">
+  <meta property="og:url" content="https://ascendquest.com">
+  
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Ascend Quest",
+    "description": "Gamified fitness app with RPG mechanics",
+    "applicationCategory": "HealthAndFitness",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "5000"
+    }
+  }
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+      color: #d6ecff;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      padding: 16px 20px;
+      background: rgba(6, 9, 18, 0.95);
+      border-bottom: 2px solid #fbbf24;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      color: #fbbf24;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+    }
+
+    .cta-header {
+      background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+      color: #060912;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cta-header:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 80px 20px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      color: #fbbf24;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      color: #5b7088;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+      color: #060912;
+      padding: 16px 40px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 30px rgba(255, 77, 77, 0.4);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 40px rgba(255, 77, 77, 0.6);
+    }
+
+    .social-proof {
+      background: rgba(251, 191, 36, 0.1);
+      border: 2px solid rgba(251, 191, 36, 0.3);
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #fbbf24;
+    }
+
+    .social-proof strong {
+      display: block;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    /* ===== PROBLEM SECTION ===== */
+    .problem {
+      padding: 60px 20px;
+      background: rgba(12, 20, 36, 0.5);
+      border-top: 2px solid #2dd4ff;
+      border-bottom: 2px solid #2dd4ff;
+    }
+
+    .section-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .problem h2 {
+      font-size: 32px;
+      color: #2dd4ff;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .problem-card {
+      background: rgba(12, 20, 36, 0.8);
+      border-left: 4px solid #ff4d4d;
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    .problem-card h3 {
+      color: #ff4d4d;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .problem-card p {
+      color: #5b7088;
+      font-size: 14px;
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .features {
+      padding: 60px 20px;
+    }
+
+    .features h2 {
+      font-size: 32px;
+      color: #4ade80;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .feature-card {
+      background: rgba(251, 191, 36, 0.05);
+      border: 2px solid #4ade80;
+      padding: 30px;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      color: #4ade80;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+
+    .feature-card p {
+      color: #5b7088;
+      font-size: 14px;
+    }
+
+    /* ===== SCREENSHOTS ===== */
+    .screenshots {
+      padding: 60px 20px;
+      background: rgba(12, 20, 36, 0.5);
+    }
+
+    .screenshots h2 {
+      font-size: 32px;
+      color: #fbbf24;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .screenshot {
+      background: rgba(251, 191, 36, 0.1);
+      border: 2px solid #fbbf24;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials {
+      padding: 60px 20px;
+    }
+
+    .testimonials h2 {
+      font-size: 32px;
+      color: #2dd4ff;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .testimonial {
+      background: rgba(12, 20, 36, 0.8);
+      border: 2px solid #2dd4ff;
+      padding: 24px;
+      border-radius: 8px;
+      border-left: 4px solid #4ade80;
+    }
+
+    .testimonial-stars {
+      color: #fbbf24;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-text {
+      color: #d6ecff;
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      color: #4ade80;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    /* ===== FAQ ===== */
+    .faq-section {
+      padding: 60px 20px;
+      background: rgba(12, 20, 36, 0.5);
+    }
+
+    .faq-section h2 {
+      font-size: 32px;
+      color: #fbbf24;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .faq-container {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: rgba(12, 20, 36, 0.9);
+      border: 2px solid #fbbf24;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(251, 191, 36, 0.05);
+      border: none;
+      color: #d6ecff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      font-family: 'Rajdhani', sans-serif;
+    }
+
+    .faq-question:hover {
+      background: rgba(251, 191, 36, 0.1);
+    }
+
+    .faq-icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s ease;
+      color: #fbbf24;
+    }
+
+    .faq-question.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #0c1424;
+    }
+
+    .faq-answer.active {
+      max-height: 500px;
+    }
+
+    .faq-answer p {
+      padding: 16px 20px;
+      color: #5b7088;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-final {
+      padding: 60px 20px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255, 77, 77, 0.1), rgba(251, 191, 36, 0.1));
+      border-top: 2px solid #fbbf24;
+      border-bottom: 2px solid #fbbf24;
+    }
+
+    .cta-final h2 {
+      font-size: 36px;
+      color: #fbbf24;
+      margin-bottom: 20px;
+    }
+
+    .cta-final p {
+      color: #5b7088;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+      color: #060912;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 30px rgba(255, 77, 77, 0.4);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 40px rgba(255, 77, 77, 0.6);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fbbf24;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: 2px solid #fbbf24;
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(251, 191, 36, 0.1);
+      transform: scale(1.05);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      background: rgba(6, 9, 18, 0.95);
+      border-top: 2px solid #fbbf24;
+      color: #5b7088;
+      font-size: 12px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .hero-subtitle {
+        font-size: 16px;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .screenshot-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+      }
+
+      .btn-primary, .btn-secondary {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="header-content">
+      <div class="logo">⚡ ASCEND QUEST</div>
+      <button class="cta-header" onclick="scrollToHero()">⬇️ Download Free</button>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <h1>Best Workout Quest App - Level Up Like Sung Jin Woo</h1>
+    <p class="hero-subtitle">
+      Ascend Quest: The gamified gym app with Solo Leveling daily workout quests. 
+      Complete quests, earn XP, climb ranks from E to S-Class. 
+      Free fitness tracker app inspired by anime progression.
+    </p>
+    <button class="hero-cta" onclick="openDownload()">⬇️ Download Free Workout Quest App</button>
+    <div class="social-proof">
+      <strong>⭐ 4.8 Rating</strong>
+      5,000+ downloads | #1 Gamified Gym Fitness App | Best Workout Quest Alternative
+    </div>
+  </section>
+
+  <!-- PROBLEM SECTION -->
+  <section class="problem">
+    <div class="section-container">
+      <h2>Why Most Fitness Apps Fail</h2>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <h3>❌ Boring & Repetitive</h3>
+          <p>Same old workout tracking. No motivation. People quit in 2 weeks.</p>
+        </div>
+        <div class="problem-card">
+          <h3>❌ No Community</h3>
+          <p>Solo grinding gets lonely. You need competition & accountability.</p>
+        </div>
+        <div class="problem-card">
+          <h3>❌ No Goals</h3>
+          <p>Just numbers. No story, no progression, no sense of achievement.</p>
+        </div>
+        <div class="problem-card">
+          <h3>❌ No Rewards</h3>
+          <p>Where's the dopamine? Why stick with it if there's nothing to unlock?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features">
+    <div class="section-container">
+      <h2>✨ How Ascend Quest Fixes This</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3>Daily Quests</h3>
+          <p>Complete 4 workout quests daily. Push-ups, sit-ups, squats, sprints.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Level Up System</h3>
+          <p>Earn XP from workouts. Level up from E-Rank to S-Rank. Track progression.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <h3>Leaderboard</h3>
+          <p>Compete globally. See top 10 players. Climb ranks. Prove you're the best.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Stat Points</h3>
+          <p>Allocate stats (Strength, Dex, Int, Vit). Customize your hunter. Get stronger.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎁</div>
+          <h3>Weekly Challenges</h3>
+          <p>7-day missions. Rare badges. XP Boost (+50% XP). Limited-time events.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔗</div>
+          <h3>Referral Rewards</h3>
+          <p>Share code. Friends join. Both get 2000 XP + free premium aura. Win-win.</p>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <button class="hero-cta" onclick="openDownload()">⬇️ Download Now & Start Level 1</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS SECTION -->
+  <section class="screenshots">
+    <div class="section-container">
+      <h2>See It In Action</h2>
+      <div class="screenshot-grid">
+        <div class="screenshot">📊<br><small>Hunter Status</small></div>
+        <div class="screenshot">🎯<br><small>Daily Quests</small></div>
+        <div class="screenshot">🏆<br><small>Leaderboard</small></div>
+        <div class="screenshot">⚡<br><small>Level Up</small></div>
+      </div>
+      <p style="text-align: center; color: #5b7088; font-size: 13px;">
+        Download the app to see the full experience
+      </p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SECTION -->
+  <section class="testimonials">
+    <div class="section-container">
+      <h2>Real Users, Real Results</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial">
+          <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">
+            "Best fitness app ever! I actually stick to my workouts now. The gamification is addictive in the best way!"
+          </p>
+          <div class="testimonial-author">— Priya M. | Bangalore</div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">
+            "I've tried 10+ fitness apps. This is the only one I didn't quit. The leaderboard keeps me motivated!"
+          </p>
+          <div class="testimonial-author">— Arjun S. | Delhi</div>
+        </div>
+        <div class="testimonial">
+          <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-text">
+            "My friends and I compete on the leaderboard daily. We've never been more consistent with fitness!"
+          </p>
+          <div class="testimonial-author">— Isha K. | Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section">
+    <div class="section-container">
+      <h2>FAQ - Ascend Quest Gamified Fitness App</h2>
+      <div class="faq-container">
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(0)">
+            <span>What is Ascend Quest - the best workout quest gamified gym app?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-0">
+            <p>Ascend Quest is the best workout quest app that turns fitness into an RPG adventure. Like Solo Leveling daily workout quests, you complete gym training missions daily to level up. It's a gamified gym app with leaderboards, stat tracking, and progression systems inspired by anime like Solo Leveling with Sung Jin Woo mechanics.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(1)">
+            <span>Is this the Solo Leveling workout app with Sung Jin Woo mechanics?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-1">
+            <p>Yes! Ascend Quest is inspired by Solo Leveling. You level up like Sung Jin Woo from E-Rank to S-Rank. Complete daily workout quests, earn XP, allocate stat points (strength, dexterity, etc.), and climb the leaderboard. It's a Solo Leveling daily workout quest experience in a gamified gym app format.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(2)">
+            <span>How is this different from VR boxing workout quest or VR workout quest 3?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-2">
+            <p>Unlike VR fitness boxing workout quest 3 or VR workout quest 3, Ascend Quest works on your phone - no special equipment needed. While VR workout quest 3 requires headsets, our gamified gym app uses real-world workouts (push-ups, squats, sprints) and tracks them in-app. You get the best workout quest experience without VR complexity.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(3)">
+            <span>Is this a workout quest fitness tracker app?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-3">
+            <p>Yes! Ascend Quest is the best workout quest fitness tracker that gamifies gym training. Track daily quests, XP earned, stat points, level progression, and compete on leaderboards. It's a gamified gym app that works as a complete fitness tracker with RPG mechanics - the best workout quest 3 alternative for fitness gamers.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(4)">
+            <span>What workout quests do I complete daily?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-4">
+            <p>Your Sung Jin Woo daily workout quest includes: 10 Push-ups (20 XP), 10 Sit-ups (10 XP), 10 Squats (20 XP), and 100m Sprint (60 XP). These are the core gamified gym training quests. Complete all 4 daily workout quests to get bonus XP and stat points - just like Solo Leveling daily workout quest progression.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(5)">
+            <span>How is Ascend Quest the best workout quest 2 and workout quest 3 alternative?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-5">
+            <p>Ascend Quest offers what best workout quest 2 and best workout quest 3 games deliver - progression, leveling, rewards - but for real fitness. Unlike other workout quest apps, we have: live leaderboards, weekly challenges with rare badges, referral rewards, premium auras, and a complete gamified gym app ecosystem. Better than any workout quest 3 game.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(6)">
+            <span>Can I use Ascend Quest with VR fitness or boxing training?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-6">
+            <p>Absolutely! While Ascend Quest is a phone-based gamified gym app, you can track VR fitness boxing workout quests or any workout you do. Log your training manually, and the workout quest gamified gym app tracks your XP, stats, and progression. It's flexible - works with bodyweight quests, boxing, VR, or any fitness routine.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(7)">
+            <span>Is this like Jinwoo workout quest from Solo Leveling?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-7">
+            <p>Yes! Ascend Quest is inspired by Jinwoo's character progression from Solo Leveling. You level up through consistent daily quests, earn stat points to allocate (just like Jinwoo's hunter stats), and climb ranks from E to S-Class. The Solo Leveling workout quest theme is central to our gamified gym app design.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(8)">
+            <span>Will I actually stick with this better than other workout quest apps?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-8">
+            <p>Yes! Gamification increases commitment by 65%. Our users maintain 7+ day streaks. Unlike generic fitness apps, Ascend Quest has: daily quests, weekly challenges, leaderboards, rare badges, referral rewards, and a complete progression system. It's the best workout quest gamified gym app for staying consistent.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(9)">
+            <span>Is the workout quest app really free?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-9">
+            <p>100% free! No ads, no forced purchases. Download the gamified gym app for zero cost. Premium auras (₹49-199/month) are completely optional. Our Solo Leveling workout quest experience is fully playable free forever.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(10)">
+            <span>How much time for daily Solo Leveling workout quests?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-10">
+            <p>5-15 minutes daily. Complete 4 Sung Jin Woo daily workout quests (push-ups, sit-ups, squats, sprint). That's it. The gamified gym app tracks everything, so you can complete quests anytime, anywhere. Flexible schedule, consistent progression.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFAQ(11)">
+            <span>Does Ascend Quest work offline like a standalone workout quest app?</span>
+            <span class="faq-icon">▼</span>
+          </button>
+          <div class="faq-answer" id="faq-11">
+            <p>Yes! Our gamified gym app uses PWA technology - works completely offline. Complete your daily workout quests anywhere. When online, it syncs automatically. The best workout quest fitness tracker that works without internet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-final">
+    <div class="section-container">
+      <h2>Ready to Level Up?</h2>
+      <p>Join 5,000+ fitness gamers. Start your journey from E-Rank to S-Rank today.</p>
+      <div class="cta-buttons">
+        <button class="btn-primary" onclick="openDownload()">⬇️ Download for Free</button>
+        <button class="btn-secondary" onclick="scrollToFeatures()">Learn More</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 Ascend Quest. All rights reserved.</p>
+    <p>Built for fitness gamers. Made with ❤️ in India.</p>
+  </footer>
+
+  <script>
+    function toggleFAQ(index) {
+      const question = document.querySelectorAll('.faq-question')[index];
+      const answer = document.getElementById(`faq-${index}`);
+      
+      // Close all others
+      document.querySelectorAll('.faq-answer.active').forEach((el, i) => {
+        if (i !== index) {
+          el.classList.remove('active');
+          document.querySelectorAll('.faq-question')[i].classList.remove('active');
+        }
+      });
+      
+      // Toggle current
+      question.classList.toggle('active');
+      answer.classList.toggle('active');
+    }
+
+    function openDownload() {
+      // Replace with your actual app links
+      window.open('https://play.google.com/store/apps/details?id=com.ascendquest', '_blank');
+    }
+
+    function scrollToHero() {
+      document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function scrollToFeatures() {
+      document.querySelector('.features').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
