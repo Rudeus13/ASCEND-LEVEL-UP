@@ -14,25 +14,27 @@
     const leaderboardLink = document.querySelector('a[href="/leaderboard.html"]');
     if (!leaderboardLink) return;
 
-    // Create referral link as button (matching leaderboard style)
+    // Create referral link as button (matching consistent style)
     const referralLink = document.createElement('a');
     referralLink.href = '/referral.html';
     referralLink.style.cssText = `
       display: inline-block;
-      padding: 10px 20px;
+      padding: 10px 14px;
       background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
       color: #060912;
       text-decoration: none;
       border-radius: 6px;
       font-weight: 700;
       font-family: 'Rajdhani', sans-serif;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
       border: 2px solid #ff4d4d;
       transition: all 0.3s ease;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       box-shadow: 0 0 12px rgba(255, 77, 77, 0.3);
+      margin-left: 8px;
+      white-space: nowrap;
     `;
     referralLink.textContent = '🔗 Referral';
     
