@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ - Ascend Level Up</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+  color: #d6ecff;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+header {
+  padding: 16px 20px;
+  background: rgba(6, 9, 18, 0.95);
+  border-bottom: 2px solid #fbbf24;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin-bottom: 30px;
+}
+
+.header-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+  text-decoration: none;
+}
+
+.back-btn {
+  background: #fbbf24;
+  color: #060912;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 36px;
+  color: #fbbf24;
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.subtitle {
+  text-align: center;
+  color: #5b7088;
+  margin-bottom: 40px;
+  font-size: 14px;
+}
+
+.faq-item {
+  background: rgba(12, 20, 36, 0.9);
+  border: 2px solid #fbbf24;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  padding: 16px 20px;
+  background: rgba(251, 191, 36, 0.05);
+  border: none;
+  color: #d6ecff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.faq-question:hover {
+  background: rgba(251, 191, 36, 0.1);
+  padding-left: 24px;
+}
+
+.faq-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+  color: #fbbf24;
+  font-weight: bold;
+}
+
+.faq-question.active .faq-icon {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #0c1424;
+}
+
+.faq-answer.active {
+  max-height: 500px;
+}
+
+.faq-answer p {
+  padding: 16px 20px;
+  color: #5b7088;
+  line-height: 1.6;
+  margin: 0;
+  font-size: 14px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(251, 191, 36, 0.2);
+  color: #5b7088;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 24px; }
+  .faq-question { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <a href="/" class="logo">⚡ ASCEND LEVEL UP</a>
+    <a href="/" class="back-btn">← Back to App</a>
+  </div>
+</header>
+
+<div class="container">
+  <h1>❓ FAQ</h1>
+  <p class="subtitle">Frequently Asked Questions</p>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(0)">
+      <span>Is Ascend Level Up really free?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-0">
+      <p>100% free! No ads, no forced purchases. Premium auras (₹49-199/month) are completely optional. Play the full game for free forever!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(1)">
+      <span>How do I earn XP?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-1">
+      <p>Complete daily quests! Each quest (10 push-ups, sit-ups, squats, 100m sprint) gives XP. Complete all 4 daily quests = bonus 20 XP + 1 stat point!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(2)">
+      <span>What are stat points and how do I allocate them?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-2">
+      <p>Stat points make your hunter stronger! Allocate to: STR (Strength), DEX (Dexterity), INT (Intelligence), VIT (Vitality), WIS (Wisdom), LCK (Luck). Each point increases that stat by 1. Use the + buttons next to each stat!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(3)">
+      <span>What's the leaderboard and how do I climb it?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-3">
+      <p>The leaderboard shows the top 10 hunters by level! Climb ranks by leveling up through quests. Complete more quests, earn more XP, level up faster, and reach the top!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(4)">
+      <span>What are weekly quests and how do they work?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-4">
+      <p>Weekly quests are 7-day challenges with big rewards! Complete: 10 daily quests, earn 100 XP, maintain 7-day streak, complete all daily quests 5 days. Finish all = rare ⚡ XP Boost badge (50% XP for 6 days)!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(5)">
+      <span>How does the referral system work?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-5">
+      <p>Get your unique referral code in the Referral section. Share it with friends. When they use your code: You get 2000 XP + 🔴 free Red Aura (30 days). They get 1000 XP + 6 stat points. Win-win!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(6)">
+      <span>What are premium auras and should I buy them?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-6">
+      <p>Premium auras are cosmetic badges showing your hunter's rank (🟠 HUNTER, 🔴 WARRIOR, 💜 LEGEND). They're optional! Free version is fully playable. Premium just adds visual flair and supports development.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(7)">
+      <span>Can I play offline?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-7">
+      <p>Yes! Ascend Level Up is a PWA (Progressive Web App). Works offline - complete quests anywhere! When online again, data syncs automatically. No internet needed for gameplay.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(8)">
+      <span>How long does each daily quest take?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-8">
+      <p>5-15 minutes total! 10 push-ups, 10 sit-ups, 10 squats, 100m sprint. That's it. Flexible - do them anytime. The app just tracks completion. You control the pace!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(9)">
+      <span>What if I'm not very fit yet?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-9">
+      <p>Perfect! Start at Level 1. Do modified versions (5 push-ups instead of 10). Scale up as you get stronger. The gamification keeps you consistent - difficulty is up to you!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(10)">
+      <span>Will I actually stick with this app?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-10">
+      <p>Yes! Gamification increases commitment by 65%. Our users maintain 7+ day streaks. Daily quests, leaderboards, badges, and streaks create natural motivation. The leveling system is addictive!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(11)">
+      <span>How do I reset my progress or delete my account?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-11">
+      <p>You can reset all progress in the app (button at bottom). This erases everything and starts fresh. For account deletion, contact support@ascendquest.com. We'll delete your data within 7 days.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(12)">
+      <span>Is my data safe and private?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-12">
+      <p>Yes! Your data is stored securely in Firebase with encryption. We never sell your data. Read our Privacy Policy for details. Only fitness stats and username are tracked - nothing else!</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggleFAQ(13)">
+      <span>How do I contact support?</span>
+      <span class="faq-icon">▼</span>
+    </button>
+    <div class="faq-answer" id="faq-13">
+      <p>Email: support@ascendquest.com or use the Contact page. We reply within 24 hours. Have a feature request? Let us know! We're always improving based on user feedback.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Ascend Level Up. Still have questions? <a href="/contact.html" style="color: #fbbf24;">Contact us</a></p>
+  </footer>
+</div>
+
+<script>
+function toggleFAQ(index) {
+  const question = document.querySelectorAll('.faq-question')[index];
+  const answer = document.getElementById(`faq-${index}`);
+  
+  // Close all others
+  document.querySelectorAll('.faq-answer.active').forEach((el, i) => {
+    if (i !== index) {
+      el.classList.remove('active');
+      document.querySelectorAll('.faq-question')[i].classList.remove('active');
+    }
+  });
+  
+  // Toggle current
+  question.classList.toggle('active');
+  answer.classList.toggle('active');
+}
+</script>
+
+</body>
+</html>

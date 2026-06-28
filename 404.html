@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Page Not Found | Ascend Level Up</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: linear-gradient(135deg, #060912 0%, #1a1f3a 100%);
+  color: #d6ecff;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.container {
+  text-align: center;
+  max-width: 600px;
+}
+
+.error-icon {
+  font-size: 120px;
+  margin-bottom: 20px;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+h1 {
+  font-size: 72px;
+  color: #ff4d4d;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+}
+
+.subtitle {
+  font-size: 24px;
+  color: #fbbf24;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+.description {
+  color: #5b7088;
+  font-size: 16px;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: #2dd4ff;
+  font-weight: 700;
+}
+
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.btn {
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #fbbf24, #ff8c00);
+  color: #060912;
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+}
+
+.btn-primary:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.6);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #fbbf24;
+  border: 2px solid #fbbf24;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.btn-secondary:hover {
+  background: rgba(251, 191, 36, 0.1);
+  transform: scale(1.05);
+}
+
+.error-box {
+  background: rgba(12, 20, 36, 0.9);
+  border: 2px solid #ff4d4d;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.error-details {
+  color: #5b7088;
+  font-size: 12px;
+  font-family: monospace;
+  word-break: break-all;
+}
+
+.quick-links {
+  background: rgba(251, 191, 36, 0.05);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.quick-links h3 {
+  color: #fbbf24;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quick-link {
+  background: rgba(12, 20, 36, 0.8);
+  border: 1px solid #fbbf24;
+  padding: 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #fbbf24;
+  font-size: 12px;
+  transition: all 0.3s ease;
+}
+
+.quick-link:hover {
+  background: rgba(251, 191, 36, 0.1);
+  transform: translateY(-2px);
+}
+
+.ascii-art {
+  color: #fbbf24;
+  font-size: 12px;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  opacity: 0.7;
+}
+
+footer {
+  color: #5b7088;
+  font-size: 12px;
+  margin-top: 40px;
+}
+
+@media (max-width: 640px) {
+  h1 { font-size: 48px; }
+  .subtitle { font-size: 18px; }
+  .description { font-size: 14px; }
+  .button-group { flex-direction: column; }
+  .btn { width: 100%; }
+  .links-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="error-icon">❌</div>
+  
+  <h1>404</h1>
+  <p class="subtitle">You've Gone Beyond The Ranks!</p>
+  
+  <div class="error-box">
+    <div class="error-message">⚠️ Page Not Found</div>
+    <div class="error-details">The page you're looking for doesn't exist on this server.</div>
+  </div>
+
+  <p class="description">
+    Looks like you've ventured into <span class="highlight">uncharted territory</span>. 
+    Even Sung Jin Woo sometimes takes a wrong turn! 
+    Let's get you back to your <span class="highlight">hunter's journey</span>.
+  </p>
+
+  <div class="ascii-art">
+    ⚡ — — — — — ⚡<br>
+    Level Up Your Fitness<br>
+    ⚡ — — — — — ⚡
+  </div>
+
+  <div class="button-group">
+    <a href="/" class="btn btn-primary">← Return to App</a>
+    <a href="/faq.html" class="btn btn-secondary">? Need Help?</a>
+  </div>
+
+  <div class="quick-links">
+    <h3>Quick Navigation</h3>
+    <div class="links-grid">
+      <a href="/" class="quick-link">🏠 Home</a>
+      <a href="/leaderboard.html" class="quick-link">🏆 Leaderboard</a>
+      <a href="/weekly-quests.html" class="quick-link">🎯 Weekly Quests</a>
+      <a href="/premium.html" class="quick-link">⭐ Premium</a>
+      <a href="/referral.html" class="quick-link">🔗 Referral</a>
+      <a href="/faq.html" class="quick-link">❓ FAQ</a>
+      <a href="/about.html" class="quick-link">ℹ️ About</a>
+      <a href="/contact.html" class="quick-link">📧 Contact</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Ascend Level Up | Lost? <a href="/contact.html" style="color: #fbbf24;">Report Bug</a></p>
+  </footer>
+</div>
+
+</body>
+</html>
