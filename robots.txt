@@ -1,0 +1,19 @@
+# Ascend Level Up - robots.txt
+# Controls search engine crawler access
+
+User-agent: *
+Allow: /
+Disallow: 
+
+# Specific rules for common crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Point to sitemap
+Sitemap: https://ascend-level-up.vercel.app/sitemap.xml
+
+# Crawl delay (optional - in milliseconds)
+Crawl-delay: 1
